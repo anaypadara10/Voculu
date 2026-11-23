@@ -1,0 +1,652 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demonstration | VOCULUS</title>
+<meta name="description" content="See how VOCULUS transforms spoken arithmetic into a physical servo-powered display.">
+<style>
+:root {
+  --bg: #050b18;
+  --panel: rgba(15, 29, 53, .78);
+  --blue: #3185ff;
+  --cyan: #36e5ff;
+  --white: #f4f8ff;
+  --muted: #9aacc8;
+  --border: rgba(107, 165, 255, .17);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  background-image:
+    linear-gradient(rgba(76,132,210,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,132,210,.055) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.orb {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: .16;
+  z-index: -1;
+  pointer-events: none;
+}
+.orb.one { background: #126aff; top: 8%; left: -200px; }
+.orb.two { background: #00d9ff; right: -200px; top: 55%; }
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 19px 7%;
+  background: rgba(5,11,24,.82);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  color: white;
+  text-decoration: none;
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+.logo span { color: var(--cyan); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+.nav-links a {
+  color: #aebdd5;
+  text-decoration: none;
+  font-size: 12px;
+  transition: .3s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+.menu-btn {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  color: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 20px;
+}
+
+.hero {
+  text-align: center;
+  padding: 105px 20px 65px;
+}
+.eyebrow {
+  display: inline-block;
+  color: var(--cyan);
+  border: 1px solid rgba(54,229,255,.28);
+  background: rgba(54,229,255,.07);
+  border-radius: 30px;
+  padding: 9px 17px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
+h1 {
+  font-size: clamp(43px, 7vw, 76px);
+  line-height: 1.08;
+  letter-spacing: -3px;
+  font-weight: 900;
+}
+.gradient {
+  background: linear-gradient(90deg, #fff, #65dfff, #438cff, #fff);
+  background-size: 250%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient 6s linear infinite;
+}
+@keyframes gradient {
+  to { background-position: 250% center; }
+}
+.hero p {
+  color: var(--muted);
+  max-width: 650px;
+  margin: 24px auto 0;
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.section {
+  max-width: 1100px;
+  margin: auto;
+  padding: 35px 24px 85px;
+}
+.section-heading { text-align: center; margin-bottom: 38px; }
+.section-heading h2 { font-size: 32px; margin-bottom: 12px; }
+.section-heading p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+.demo-panel {
+  background: linear-gradient(145deg, rgba(18,37,68,.9), rgba(8,18,36,.9));
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  padding: 35px;
+  box-shadow: 0 25px 80px rgba(0,0,0,.25);
+  overflow: hidden;
+  position: relative;
+}
+.demo-panel::before {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  background: var(--blue);
+  filter: blur(120px);
+  opacity: .12;
+  top: -120px;
+  right: -80px;
+}
+.demo-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  position: relative;
+}
+.demo-top h3 { font-size: 17px; }
+.status {
+  color: #6fffc1;
+  font-size: 10px;
+  letter-spacing: 1px;
+  border: 1px solid rgba(111,255,193,.25);
+  background: rgba(111,255,193,.07);
+  padding: 8px 12px;
+  border-radius: 30px;
+}
+.demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  position: relative;
+}
+.demo-card {
+  min-height: 175px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  background: rgba(3,12,27,.55);
+  border-radius: 17px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card-label {
+  color: var(--cyan);
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 17px;
+}
+.speech {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  line-height: 1.3;
+}
+.subtext { color: var(--muted); font-size: 12px; margin-top: 12px; }
+.result {
+  font-size: clamp(48px, 7vw, 75px);
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--cyan);
+  text-shadow: 0 0 30px rgba(54,229,255,.35);
+}
+.display-area {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+.digit {
+  display: grid;
+  grid-template-columns: 20px 20px 20px;
+  grid-template-rows: 12px 20px 12px 20px 12px;
+  gap: 4px;
+  transform: skew(-5deg);
+}
+.seg {
+  background: rgba(54,229,255,.1);
+  border: 1px solid rgba(54,229,255,.15);
+  border-radius: 5px;
+  transition: .5s;
+}
+.seg.on {
+  background: var(--cyan);
+  box-shadow: 0 0 13px rgba(54,229,255,.65);
+}
+.a { grid-column: 1 / 4; grid-row: 1; }
+.b { grid-column: 3; grid-row: 1 / 3; }
+.c { grid-column: 3; grid-row: 4 / 6; }
+.d { grid-column: 1 / 4; grid-row: 5; }
+.e { grid-column: 1; grid-row: 4 / 6; }
+.f { grid-column: 1; grid-row: 1 / 3; }
+.g { grid-column: 1 / 4; grid-row: 3; }
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 13px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px 23px;
+  font-weight: 800;
+  font-size: 12px;
+  transition: .3s;
+}
+.primary {
+  color: #04101f;
+  background: linear-gradient(100deg, var(--cyan), #7b9fff);
+  box-shadow: 0 8px 28px rgba(54,229,255,.18);
+}
+.secondary {
+  color: white;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+}
+button:hover { transform: translateY(-3px); filter: brightness(1.12); }
+.demo-note {
+  text-align: center;
+  color: #8195b5;
+  font-size: 11px;
+  line-height: 1.7;
+  margin-top: 20px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+.step {
+  padding: 24px 19px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: .3s;
+}
+.step:hover {
+  transform: translateY(-7px);
+  border-color: rgba(54,229,255,.5);
+  box-shadow: 0 15px 35px rgba(0,0,0,.2);
+}
+.step-num {
+  color: var(--cyan);
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 19px;
+}
+.step h3 { font-size: 16px; margin-bottom: 10px; }
+.step p { color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+.cta {
+  text-align: center;
+  padding: 65px 25px;
+  border: 1px solid var(--border);
+  border-radius: 23px;
+  background: linear-gradient(120deg, rgba(24,72,130,.3), rgba(0,202,255,.07));
+}
+.cta h2 { font-size: 30px; margin-bottom: 14px; }
+.cta p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+footer {
+  padding: 35px 7%;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  color: #8193b0;
+  font-size: 11px;
+}
+footer a { color: #a9bad4; text-decoration: none; margin-left: 13px; }
+footer a:hover { color: var(--cyan); }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.reveal.show { opacity: 1; transform: translateY(0); }
+
+@media(max-width: 850px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 66px;
+    left: 0;
+    right: 0;
+    background: #081326;
+    padding: 25px;
+    flex-direction: column;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links.open { display: flex; }
+  .menu-btn { display: block; }
+  .steps { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width: 600px) {
+  .hero { padding-top: 75px; }
+  .demo-panel { padding: 20px; }
+  .demo-grid { grid-template-columns: 1fr; }
+  .demo-top { align-items: flex-start; flex-direction: column; }
+  .steps { grid-template-columns: 1fr; }
+  footer { flex-direction: column; }
+  footer a { margin: 0 10px 0 0; }
+}
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="orb one"></div>
+<div class="orb two"></div>
+
+<nav>
+  <a class="logo" href="index.html">VOCU<span>LUS</span></a>
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">HOME</a>
+    <a href="how-it-works.html">HOW IT WORKS</a>
+    <a href="technology.html">TECHNOLOGY</a>
+    <a class="active" href="demonstration.html">DEMO</a>
+    <a href="our-journey.html">OUR JOURNEY</a>
+    <a href="gallery.html">GALLERY</a>
+    <a href="creators.html">CREATORS</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">SEE THE PROCESS IN ACTION</div>
+  <h1>From Voice<br>to <span class="gradient">Answer.</span></h1>
+  <p>
+    No keypad. No complicated input.
+    Just speak a mathematical expression and watch how
+    VOCULUS transforms it into a physical result.
+  </p>
+</header>
+
+<section class="section">
+  <div class="section-heading reveal">
+    <h2>Experience the <span class="gradient">Demonstration</span></h2>
+    <p>Explore an illustrative example of the VOCULUS process.</p>
+  </div>
+
+  <div class="demo-panel reveal">
+    <div class="demo-top">
+      <h3>VOCULUS · INTERACTIVE PREVIEW</h3>
+      <span class="status">● VISUAL PREVIEW</span>
+    </div>
+
+    <div class="demo-grid">
+      <div class="demo-card">
+        <div class="card-label">01 / SPOKEN INPUT</div>
+        <div class="speech" id="spoken">"Twenty-five plus seventeen"</div>
+        <div class="subtext">A spoken arithmetic command</div>
+      </div>
+
+      <div class="demo-card">
+        <div class="card-label">02 / PROCESSED RESULT</div>
+        <div class="result" id="answer">42</div>
+        <div class="subtext" id="calculation">25 + 17 = 42</div>
+      </div>
+
+      <div class="demo-card">
+        <div class="card-label">03 / SERVO MOVEMENT</div>
+        <div class="speech">14 Servos</div>
+        <div class="subtext">Seven segments per digit are positioned by servo motors.</div>
+      </div>
+
+      <div class="demo-card">
+        <div class="card-label">04 / PHYSICAL DISPLAY</div>
+        <div class="display-area" id="display">
+          <div class="digit" data-digit="4">
+            <i class="seg a"></i><i class="seg b"></i><i class="seg c on"></i>
+            <i class="seg d"></i><i class="seg e on"></i><i class="seg f on"></i><i class="seg g on"></i>
+          </div>
+          <div class="digit" data-digit="2">
+            <i class="seg a on"></i><i class="seg b on"></i><i class="seg c"></i>
+            <i class="seg d on"></i><i class="seg e on"></i><i class="seg f"></i><i class="seg g on"></i>
+          </div>
+        </div>
+        <div class="subtext">A two-digit, servo-powered seven-segment display</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="primary" id="runBtn">▶ RUN DEMO</button>
+      <button class="secondary" id="nextBtn">NEXT EXAMPLE ↗</button>
+    </div>
+    <p class="demo-note">
+      This is a website illustration of the workflow, not a live microphone,
+      Arduino or hardware connection. The actual calculation and display
+      are performed by the VOCULUS prototype.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading reveal">
+    <h2>What Happens <span class="gradient">Behind the Scenes?</span></h2>
+    <p>Four stages turn a spoken calculation into a physical answer.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">STEP 01</div>
+      <h3>Voice Input</h3>
+      <p>The microphone captures the spoken mathematical expression.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">STEP 02</div>
+      <h3>Python Processing</h3>
+      <p>Python recognises the expression and calculates the answer.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">STEP 03</div>
+      <h3>Arduino Control</h3>
+      <p>The result is sent to the Arduino Mega through serial communication.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">STEP 04</div>
+      <h3>Physical Output</h3>
+      <p>Fourteen servo motors position the segments to display the answer.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="cta reveal">
+    <h2>Technology You Can <span class="gradient">See.</span></h2>
+    <p>
+      VOCULUS brings together speech recognition, programming,
+      electronics and mechanical movement in one interactive project.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 VOCULUS · SPEAK. CALCULATE. SIMPLIFY.</div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="our-journey.html">Journey</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="creators.html">Creators</a>
+  </div>
+</footer>
+
+<script>
+const examples = [
+  {
+    spoken: '"Twenty-five plus seventeen"',
+    calculation: '25 + 17 = 42',
+    answer: '42'
+  },
+  {
+    spoken: '"Thirty-six minus fourteen"',
+    calculation: '36 - 14 = 22',
+    answer: '22'
+  },
+  {
+    spoken: '"Six times seven"',
+    calculation: '6 × 7 = 42',
+    answer: '42'
+  },
+  {
+    spoken: '"Eighty-four divided by two"',
+    calculation: '84 ÷ 2 = 42',
+    answer: '42'
+  }
+];
+
+const patterns = {
+  '0': ['a','b','c','d','e','f'],
+  '1': ['b','c'],
+  '2': ['a','b','g','e','d'],
+  '3': ['a','b','c','d','g'],
+  '4': ['f','g','b','c'],
+  '5': ['a','f','g','c','d'],
+  '6': ['a','f','g','e','c','d'],
+  '7': ['a','b','c'],
+  '8': ['a','b','c','d','e','f','g'],
+  '9': ['a','b','c','d','f','g']
+};
+
+let current = 0;
+let running = false;
+
+function renderDisplay(value) {
+  const display = document.getElementById('display');
+  display.innerHTML = '';
+
+  value.padStart(2, '0').slice(-2).split('').forEach(number => {
+    const digit = document.createElement('div');
+    digit.className = 'digit';
+
+    ['a','b','c','d','e','f','g'].forEach(segment => {
+      const item = document.createElement('i');
+      item.className = 'seg ' + segment;
+
+      if (patterns[number].includes(segment)) {
+        item.classList.add('on');
+      }
+
+      digit.appendChild(item);
+    });
+
+    display.appendChild(digit);
+  });
+}
+
+function showExample(index) {
+  const example = examples[index];
+  document.getElementById('spoken').textContent = example.spoken;
+  document.getElementById('calculation').textContent = example.calculation;
+  document.getElementById('answer').textContent = example.answer;
+  renderDisplay(example.answer);
+}
+
+function runDemo() {
+  if (running) return;
+  running = true;
+
+  const button = document.getElementById('runBtn');
+  button.textContent = 'RUNNING...';
+  button.disabled = true;
+
+  const spoken = document.getElementById('spoken');
+  const calculation = document.getElementById('calculation');
+  const answer = document.getElementById('answer');
+
+  answer.textContent = '--';
+  renderDisplay('00');
+
+  spoken.textContent = 'Listening to the example...';
+
+  setTimeout(() => {
+    spoken.textContent = examples[current].spoken;
+    calculation.textContent = 'Processing the expression...';
+  }, 900);
+
+  setTimeout(() => {
+    calculation.textContent = 'Calculating the answer...';
+  }, 1800);
+
+  setTimeout(() => {
+    calculation.textContent = examples[current].calculation;
+    answer.textContent = examples[current].answer;
+    renderDisplay(examples[current].answer);
+  }, 2700);
+
+  setTimeout(() => {
+    button.textContent = '▶ RUN DEMO';
+    button.disabled = false;
+    running = false;
+  }, 3400);
+}
+
+document.getElementById('runBtn').addEventListener('click', runDemo);
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (running) return;
+  current = (current + 1) % examples.length;
+  showExample(current);
+});
+
+document.getElementById('menuBtn').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(element => {
+  observer.observe(element);
+});
+
+showExample(current);
+</script>
+</body>
+</html>
