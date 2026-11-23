@@ -1,0 +1,645 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<title>How It Works | VOCULUS</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg:#071426;
+  --panel:rgba(17,39,66,.75);
+  --blue:#58a6ff;
+  --cyan:#65e4ff;
+  --white:#f4f8ff;
+  --muted:#9aadc5;
+  --border:rgba(151,190,230,.15);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:'DM Sans',sans-serif;color:var(--white);background:var(--bg);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+.background{
+ position:fixed;inset:0;z-index:-2;pointer-events:none;
+ background:
+ radial-gradient(ellipse at 15% 15%,rgba(26,109,210,.2),transparent 38%),
+ radial-gradient(ellipse at 85% 65%,rgba(0,190,255,.1),transparent 35%),
+ var(--bg);
+}
+.grid-bg{
+ position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.13;
+ background-image:linear-gradient(rgba(140,190,255,.1) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(140,190,255,.1) 1px,transparent 1px);
+ background-size:55px 55px;
+}
+.orb{
+ position:fixed;width:260px;height:260px;border-radius:50%;
+ filter:blur(80px);opacity:.15;z-index:-1;pointer-events:none;
+ animation:drift 12s ease-in-out infinite alternate;
+}
+.orb.one{background:#1676ff;top:20%;left:-150px}
+.orb.two{background:#00c8e9;right:-140px;top:65%;animation-delay:-5s}
+@keyframes drift{to{transform:translate(45px,-55px)}}
+
+/* NAVIGATION */
+.navbar{
+ position:sticky;top:0;z-index:100;
+ background:rgba(7,20,38,.84);
+ backdrop-filter:blur(20px);
+ border-bottom:1px solid var(--border);
+}
+.nav-container{
+ max-width:1200px;min-height:76px;margin:auto;padding:0 25px;
+ display:flex;justify-content:space-between;align-items:center;gap:20px;
+}
+.logo{font:700 25px 'Space Grotesk';letter-spacing:2px}
+.logo span{color:var(--cyan)}
+.nav-links{display:flex;align-items:center;gap:23px}
+.nav-links a{
+ position:relative;color:#b6c6da;font-size:12px;font-weight:600;
+ transition:color .3s;
+}
+.nav-links a:hover,.nav-links a.active{color:white}
+.nav-links a::after{
+ content:"";position:absolute;left:0;bottom:-9px;width:0;height:2px;
+ background:var(--cyan);box-shadow:0 0 12px var(--cyan);
+ transition:width .3s;
+}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.menu-toggle{
+ display:none;color:white;background:var(--panel);
+ border:1px solid var(--border);border-radius:9px;
+ padding:8px 12px;font-size:19px;cursor:pointer;
+}
+
+/* GENERAL */
+.container{max-width:1120px;width:calc(100% - 50px);margin:auto}
+section{padding:95px 0}
+.eyebrow{
+ color:var(--cyan);font-size:11px;font-weight:800;
+ letter-spacing:2.5px;text-transform:uppercase;
+ display:flex;align-items:center;gap:10px;
+}
+.eyebrow:before{content:"";width:25px;height:1px;background:var(--cyan)}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif}
+.gradient{
+ background:linear-gradient(100deg,#fff,#70c8ff,#75f0f4);
+ -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.section-title{font-size:clamp(32px,5vw,47px);line-height:1.15;letter-spacing:-1.4px;margin-top:18px}
+.description{color:var(--muted);font-size:14px;line-height:1.9;max-width:660px;margin-top:17px}
+.center{text-align:center}
+.center .eyebrow{justify-content:center}
+.center .description{margin-left:auto;margin-right:auto}
+
+.btn{
+ display:inline-flex;align-items:center;justify-content:center;gap:9px;
+ padding:13px 21px;border-radius:10px;font-size:12px;font-weight:800;
+ transition:transform .3s,box-shadow .3s,border-color .3s;
+}
+.primary{background:linear-gradient(110deg,#2685ed,#27bde8);box-shadow:0 8px 25px #258fef40}
+.primary:hover{transform:translateY(-5px);box-shadow:0 14px 35px #258fef70}
+.secondary{border:1px solid #96c3f044;background:#ffffff08}
+.secondary:hover{transform:translateY(-5px);border-color:var(--cyan);box-shadow:0 12px 30px #3c96ff20}
+
+/* HERO */
+.hero{padding:105px 0 85px;text-align:center;position:relative}
+.hero-badge{
+ display:inline-flex;align-items:center;gap:9px;
+ padding:9px 15px;border-radius:30px;
+ border:1px solid #5dc6ff40;background:#439bff12;
+ color:#b9e8ff;font-size:11px;font-weight:700;letter-spacing:1px;
+ animation:fadeDown .8s both;
+}
+.hero h1{
+ font-size:clamp(43px,7vw,75px);letter-spacing:-3px;
+ line-height:1.08;margin-top:27px;animation:fadeUp .9s .1s both;
+}
+.hero .description{margin:23px auto 0;animation:fadeUp .9s .2s both}
+.hero .btn{margin-top:30px;animation:fadeUp .9s .3s both}
+
+/* WORKFLOW OVERVIEW */
+.workflow{
+ display:grid;grid-template-columns:repeat(4,1fr);
+ gap:15px;margin-top:55px;position:relative;
+}
+.workflow:before{
+ content:"";position:absolute;top:39px;left:12%;right:12%;
+ height:1px;background:linear-gradient(90deg,transparent,#4eafff,#65e4ff,transparent);
+}
+.workflow-card{
+ position:relative;text-align:center;padding:0 12px 25px;
+}
+.step-circle{
+ width:78px;height:78px;border-radius:50%;
+ display:grid;place-items:center;margin:0 auto 22px;
+ background:linear-gradient(145deg,#176ecb,#12365f);
+ border:1px solid #71caff70;
+ box-shadow:0 0 28px #238bff25;
+ font-size:27px;position:relative;z-index:1;
+ transition:transform .35s,box-shadow .35s;
+}
+.workflow-card:hover .step-circle{
+ transform:scale(1.12) rotate(5deg);
+ box-shadow:0 0 35px #238bff70;
+}
+.step-label{font-size:10px;color:var(--cyan);font-weight:800;letter-spacing:2px}
+.workflow-card h3{font-size:17px;margin-top:9px}
+.workflow-card p{font-size:12px;color:var(--muted);line-height:1.8;margin-top:9px}
+
+/* DETAILED STAGES */
+.stage{
+ display:grid;grid-template-columns:1fr 1fr;gap:65px;
+ align-items:center;margin-top:65px;
+}
+.stage.reverse .stage-visual{order:2}
+.stage.reverse .stage-copy{order:1}
+.stage-visual{
+ min-height:300px;border:1px solid var(--border);
+ border-radius:23px;background:linear-gradient(145deg,#122d4d,#091b30);
+ display:grid;place-items:center;position:relative;overflow:hidden;
+ box-shadow:0 25px 70px #0003;
+}
+.stage-visual:before{
+ content:"";position:absolute;width:220px;height:220px;
+ background:#238bff;filter:blur(100px);opacity:.2;
+}
+.visual-content{position:relative;text-align:center;padding:30px;width:100%}
+.visual-icon{font-size:65px;display:block;filter:drop-shadow(0 0 20px #49b9ff50)}
+.visual-caption{color:#a7bfd8;font-size:11px;letter-spacing:2px;margin-top:20px}
+.stage-number{font-size:12px;color:var(--cyan);letter-spacing:2px;font-weight:800}
+.stage-copy h2{font-size:34px;line-height:1.2;margin-top:14px}
+.stage-copy p{font-size:13px;line-height:1.9;color:var(--muted);margin-top:16px}
+.stage-list{list-style:none;margin-top:20px}
+.stage-list li{
+ color:#c4d4e6;font-size:12px;margin-top:12px;
+ display:flex;gap:10px;line-height:1.6;
+}
+.stage-list li:before{content:"✦";color:var(--cyan)}
+
+/* VOICE INPUT VISUAL */
+.voice-visual .mic{
+ width:105px;height:105px;margin:auto;border-radius:50%;
+ display:grid;place-items:center;font-size:42px;
+ background:linear-gradient(145deg,#176ecb,#173d72);
+ border:1px solid #7ed1ff80;
+ animation:pulse 2s infinite;
+}
+@keyframes pulse{
+ 50%{box-shadow:0 0 0 17px #1769e812,0 0 40px #41b4ff55}
+}
+.wave{
+ display:flex;justify-content:center;align-items:center;gap:5px;height:45px;margin-top:20px;
+}
+.wave span{width:4px;border-radius:10px;background:linear-gradient(#69edff,#2487f0);animation:wave 1s ease-in-out infinite alternate}
+.wave span:nth-child(1),.wave span:nth-child(9){height:10px}
+.wave span:nth-child(2),.wave span:nth-child(8){height:19px}
+.wave span:nth-child(3),.wave span:nth-child(7){height:28px}
+.wave span:nth-child(4),.wave span:nth-child(6){height:36px}
+.wave span:nth-child(5){height:43px}
+.wave span:nth-child(even){animation-delay:-.5s}
+@keyframes wave{to{transform:scaleY(.3)}}
+
+/* PYTHON VISUAL */
+.code-window{
+ width:100%;max-width:360px;margin:auto;
+ border:1px solid #77baff35;border-radius:13px;
+ overflow:hidden;background:#071525;text-align:left;
+}
+.code-top{padding:12px 15px;background:#142b45;color:#9bb7d3;font-size:10px}
+.code-body{padding:20px;font:12px/2 monospace;color:#b7d5ef}
+.code-blue{color:#73caff}
+.code-green{color:#75e6c0}
+.code-yellow{color:#f4d77c}
+
+/* ARDUINO VISUAL */
+.board{
+ width:210px;height:135px;border-radius:13px;
+ background:linear-gradient(145deg,#197b9b,#0e4966);
+ border:2px solid #5ac5e4;
+ display:grid;place-items:center;
+ box-shadow:0 0 35px #26a9d433;
+ transform:rotate(-5deg);
+ transition:transform .4s;
+}
+.stage-visual:hover .board{transform:rotate(0) scale(1.05)}
+.board strong{font:700 23px 'Space Grotesk';color:#e8fcff}
+.board small{display:block;color:#b8efff;font-size:9px;text-align:center;margin-top:6px;letter-spacing:2px}
+
+/* SERVO VISUAL */
+.servo-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.servo{
+ width:43px;height:75px;border-radius:8px;
+ background:linear-gradient(90deg,#17385b,#2b5682,#17385b);
+ border:1px solid #78bfff55;position:relative;
+ animation:servoMove 2.2s ease-in-out infinite alternate;
+}
+.servo:before{
+ content:"";position:absolute;top:-12px;left:50%;
+ width:28px;height:12px;transform:translateX(-50%);
+ background:#80c9ff;border-radius:5px;
+}
+.servo:nth-child(even){animation-delay:-1s}
+@keyframes servoMove{to{transform:rotate(12deg)}}
+
+/* CALCULATION */
+.calculation-box{
+ margin-top:50px;padding:38px;border-radius:22px;
+ border:1px solid #5bbdff40;
+ background:linear-gradient(135deg,#10345b,#0a2039);
+ position:relative;overflow:hidden;
+}
+.calculation-box:before{
+ content:"";position:absolute;inset:-50%;
+ background:conic-gradient(from 0deg,transparent,#4ab5ff18,transparent 35%);
+ animation:rotate 15s linear infinite;
+}
+@keyframes rotate{to{transform:rotate(360deg)}}
+.calc-inner{position:relative;text-align:center}
+.calc-label{font-size:10px;color:var(--cyan);font-weight:800;letter-spacing:2px}
+.calc-expression{font:700 clamp(35px,6vw,60px) 'Space Grotesk';margin-top:20px}
+.calc-expression span{color:var(--cyan)}
+.calc-answer{
+ display:inline-block;margin-top:20px;padding:14px 40px;
+ border-radius:12px;border:1px solid #68dcff70;
+ background:#1a76ba30;color:#70e9ff;
+ font:700 48px 'Space Grotesk';
+ animation:answerGlow 3s infinite;
+}
+@keyframes answerGlow{50%{box-shadow:0 0 35px #2daeff35}}
+.calc-caption{font-size:11px;color:#a7bfd8;margin-top:15px}
+
+/* IMPORTANT NOTE */
+.note{
+ margin-top:35px;padding:22px 25px;
+ border-left:3px solid var(--cyan);
+ background:#ffffff08;border-radius:0 12px 12px 0;
+}
+.note strong{font-size:13px}
+.note p{font-size:12px;color:var(--muted);line-height:1.8;margin-top:7px}
+
+/* FOOTER */
+footer{padding:40px 0;border-top:1px solid var(--border);background:#030c18a8}
+.footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:25px}
+.footer-brand{font:700 20px 'Space Grotesk';letter-spacing:2px}
+.footer-brand span{color:var(--cyan)}
+.footer-text{font-size:11px;color:var(--muted);margin-top:7px}
+.footer-links{display:flex;gap:17px;flex-wrap:wrap}
+.footer-links a{font-size:11px;color:var(--muted);transition:color .3s}
+.footer-links a:hover{color:var(--cyan)}
+.copyright{border-top:1px solid var(--border);margin-top:28px;padding-top:20px;text-align:center;color:#71869f;font-size:10px}
+
+/* REVEALS */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:850px){
+ .nav-links{gap:12px}
+ .nav-links a{font-size:10px}
+ .stage{gap:30px}
+ .workflow{grid-template-columns:repeat(2,1fr);row-gap:30px}
+ .workflow:before{display:none}
+}
+@media(max-width:700px){
+ .nav-container{min-height:68px}
+ .menu-toggle{display:block}
+ .nav-links{
+  display:none;position:absolute;top:68px;left:0;right:0;
+  background:#071426f7;padding:23px 25px;
+  flex-direction:column;align-items:flex-start;gap:22px;
+  border-bottom:1px solid var(--border);
+ }
+ .nav-links.open{display:flex}
+ .nav-links a{font-size:14px}
+ .hero{padding:75px 0}
+ section{padding:70px 0}
+ .stage{grid-template-columns:1fr;gap:25px;margin-top:45px}
+ .stage.reverse .stage-visual,.stage.reverse .stage-copy{order:initial}
+ .stage-visual{min-height:260px}
+ .stage-copy h2{font-size:29px}
+ .footer-content{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:420px){
+ .container{width:calc(100% - 34px)}
+ .workflow{gap:12px}
+ .workflow-card{padding:0 5px}
+ .step-circle{width:65px;height:65px}
+ .calculation-box{padding:25px 15px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{
+  animation-duration:.01ms!important;
+  animation-iteration-count:1!important;
+  transition-duration:.01ms!important;
+  scroll-behavior:auto!important;
+ }
+ .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body>
+<div class="background"></div>
+<div class="grid-bg"></div>
+<div class="orb one"></div>
+<div class="orb two"></div>
+
+<header class="navbar">
+ <div class="nav-container">
+  <a href="index.html" class="logo">VOCU<span>LUS</span></a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+  <nav class="nav-links" id="navLinks">
+   <a href="index.html">Home</a>
+   <a href="how-it-works.html" class="active">How It Works</a>
+   <a href="technology.html">Technology</a>
+   <a href="demonstration.html">Demonstration</a>
+   <a href="our-journey.html">Our Journey</a>
+   <a href="gallery.html">Gallery</a>
+   <a href="creators.html">Creators</a>
+  </nav>
+ </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+ <div class="container">
+  <div class="hero-badge">✦ UNDERSTANDING THE SYSTEM</div>
+  <h1>From Spoken Words<br>to <span class="gradient">Physical Numbers.</span></h1>
+  <p class="description">
+   VOCULUS connects voice recognition, mathematical processing and mechanical movement in one integrated system. Here's how every stage works together.
+  </p>
+  <a href="#workflow" class="btn primary">Explore the Process ↓</a>
+ </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="workflow">
+ <div class="container">
+  <div class="center reveal">
+   <div class="eyebrow">THE COMPLETE WORKFLOW</div>
+   <h2 class="section-title">Four Stages. <span class="gradient">One Result.</span></h2>
+   <p class="description">Every spoken calculation travels through four connected stages before appearing on the physical display.</p>
+  </div>
+
+  <div class="workflow">
+   <div class="workflow-card reveal">
+    <div class="step-circle">🎙️</div>
+    <div class="step-label">STAGE 01</div>
+    <h3>Voice Input</h3>
+    <p>The microphone captures the spoken expression.</p>
+   </div>
+   <div class="workflow-card reveal">
+    <div class="step-circle">🐍</div>
+    <div class="step-label">STAGE 02</div>
+    <h3>Python Processing</h3>
+    <p>Speech is interpreted and the calculation is performed.</p>
+   </div>
+   <div class="workflow-card reveal">
+    <div class="step-circle">🧠</div>
+    <div class="step-label">STAGE 03</div>
+    <h3>Arduino Control</h3>
+    <p>The result is sent through serial communication.</p>
+   </div>
+   <div class="workflow-card reveal">
+    <div class="step-circle">🔢</div>
+    <div class="step-label">STAGE 04</div>
+    <h3>Servo Display</h3>
+    <p>Motors position the segments to show the answer.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- STAGE 1 -->
+<section>
+ <div class="container">
+  <div class="stage">
+   <div class="stage-visual reveal">
+    <div class="visual-content voice-visual">
+     <div class="mic">🎙️</div>
+     <div class="wave">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+     </div>
+     <div class="visual-caption">AUDIO INPUT CAPTURE</div>
+    </div>
+   </div>
+   <div class="stage-copy reveal">
+    <div class="stage-number">01 / VOICE INPUT</div>
+    <h2>It Starts With <span class="gradient">Your Voice.</span></h2>
+    <p>The user speaks a mathematical expression into a microphone. Python's speech-recognition system processes the audio and converts the spoken words into text that the program can interpret.</p>
+    <ul class="stage-list">
+     <li>Captures spoken mathematical expressions.</li>
+     <li>Recognises words such as plus, minus and multiplied by.</li>
+     <li>Passes the recognised expression to the calculation program.</li>
+    </ul>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- STAGE 2 -->
+<section style="background:#ffffff05">
+ <div class="container">
+  <div class="stage reverse">
+   <div class="stage-visual reveal">
+    <div class="visual-content">
+     <div class="code-window">
+      <div class="code-top">VOCULUS · PYTHON PROCESSING</div>
+      <div class="code-body">
+       <div class="code-blue">INPUT:</div>
+       "Twenty-five plus seventeen"<br><br>
+       <div class="code-blue">INTERPRETATION:</div>
+       <span class="code-yellow">25 + 17</span><br><br>
+       <div class="code-blue">CALCULATION:</div>
+       25 + 17 = <span class="code-green">42</span><br><br>
+       <div class="code-green">RESULT READY ✓</div>
+      </div>
+     </div>
+     <div class="visual-caption">SOFTWARE PROCESSING</div>
+    </div>
+   </div>
+   <div class="stage-copy reveal">
+    <div class="stage-number">02 / PYTHON PROCESSING</div>
+    <h2>Words Become <span class="gradient">Calculations.</span></h2>
+    <p>Python interprets the recognised expression, identifies the numbers and arithmetic operation, and calculates the answer. The program then prepares the result for the Arduino.</p>
+    <ul class="stage-list">
+     <li>Processes the recognised text.</li>
+     <li>Identifies the mathematical operation.</li>
+     <li>Calculates the numerical answer.</li>
+     <li>Prepares the result for serial transmission.</li>
+    </ul>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- STAGE 3 -->
+<section>
+ <div class="container">
+  <div class="stage">
+   <div class="stage-visual reveal">
+    <div class="visual-content">
+     <div class="board">
+      <div>
+       <strong>ARDUINO</strong>
+       <small>MEGA CONTROL UNIT</small>
+      </div>
+     </div>
+     <div class="visual-caption">SERIAL COMMUNICATION</div>
+    </div>
+   </div>
+   <div class="stage-copy reveal">
+    <div class="stage-number">03 / ARDUINO CONTROL</div>
+    <h2>The Result Reaches <span class="gradient">the Hardware.</span></h2>
+    <p>The Python program sends the calculated result to the Arduino Mega using serial communication. The Arduino reads the received value and determines the servo positions needed for the display.</p>
+    <ul class="stage-list">
+     <li>Receives the result from the computer.</li>
+     <li>Interprets the numerical value.</li>
+     <li>Determines the required display pattern.</li>
+     <li>Controls the connected servo motors.</li>
+    </ul>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- STAGE 4 -->
+<section style="background:#ffffff05">
+ <div class="container">
+  <div class="stage reverse">
+   <div class="stage-visual reveal">
+    <div class="visual-content">
+     <div class="servo-row">
+      <div class="servo"></div><div class="servo"></div>
+      <div class="servo"></div><div class="servo"></div>
+      <div class="servo"></div><div class="servo"></div>
+      <div class="servo"></div>
+     </div>
+     <div class="visual-caption">SERVO MOTOR MOVEMENT</div>
+    </div>
+   </div>
+   <div class="stage-copy reveal">
+    <div class="stage-number">04 / PHYSICAL DISPLAY</div>
+    <h2>Movement Creates <span class="gradient">the Answer.</span></h2>
+    <p>The Arduino sends control signals to the servo motors. These motors physically position the seven-segment elements to form the required digits on the two-digit display.</p>
+    <ul class="stage-list">
+     <li>Servo motors receive their control signals.</li>
+     <li>Individual display segments move into position.</li>
+     <li>The two-digit display forms the calculated answer.</li>
+     <li>The result becomes visible without a traditional keypad.</li>
+    </ul>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- EXAMPLE -->
+<section>
+ <div class="container">
+  <div class="center reveal">
+   <div class="eyebrow">SEE IT IN ACTION</div>
+   <h2 class="section-title">One Expression. <span class="gradient">One Answer.</span></h2>
+   <p class="description">Here's an example of how a spoken calculation travels through the VOCULUS system.</p>
+  </div>
+
+  <div class="calculation-box reveal">
+   <div class="calc-inner">
+    <div class="calc-label">SPOKEN INPUT</div>
+    <div class="calc-expression">25 <span>+</span> 17</div>
+    <div class="calc-label" style="margin-top:25px">FINAL DISPLAY OUTPUT</div>
+    <div class="calc-answer">42</div>
+    <div class="calc-caption">The servo-controlled seven-segment display presents the answer.</div>
+   </div>
+  </div>
+
+  <div class="note reveal">
+   <strong>What makes VOCULUS different?</strong>
+   <p>Instead of relying on a conventional keypad and electronic screen, VOCULUS uses spoken input and a physical servo-operated display to demonstrate an alternative way of performing calculations.</p>
+  </div>
+ </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-top:15px">
+ <div class="container center reveal">
+  <div class="eyebrow">EXPLORE FURTHER</div>
+  <h2 class="section-title">Curious About the <span class="gradient">Technology?</span></h2>
+  <p class="description">Explore the hardware and software components that make VOCULUS work.</p>
+  <a href="technology.html" class="btn primary" style="margin-top:27px">Explore the Technology →</a>
+ </div>
+</section>
+
+</main>
+
+<footer>
+ <div class="container">
+  <div class="footer-content">
+   <div>
+    <div class="footer-brand">VOCU<span>LUS</span></div>
+    <div class="footer-text">SPEAK. CALCULATE. SIMPLIFY.</div>
+   </div>
+   <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="technology.html">Technology</a>
+    <a href="demonstration.html">Demonstration</a>
+    <a href="our-journey.html">Our Journey</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="creators.html">Creators</a>
+   </div>
+  </div>
+  <div class="copyright">© 2026 VOCULUS · Created by Anay &amp; Sankalp · Tejas International School</div>
+ </div>
+</footer>
+
+<script>
+/* MOBILE NAVIGATION */
+const menuToggle=document.getElementById("menuToggle");
+const navLinks=document.getElementById("navLinks");
+
+menuToggle.addEventListener("click",()=>{
+ const open=navLinks.classList.toggle("open");
+ menuToggle.textContent=open?"✕":"☰";
+ menuToggle.setAttribute("aria-expanded",open);
+});
+
+navLinks.querySelectorAll("a").forEach(link=>{
+ link.addEventListener("click",()=>{
+  navLinks.classList.remove("open");
+  menuToggle.textContent="☰";
+  menuToggle.setAttribute("aria-expanded","false");
+ });
+});
+
+/* SCROLL REVEAL */
+const revealItems=document.querySelectorAll(".reveal");
+
+if("IntersectionObserver" in window){
+ const observer=new IntersectionObserver((entries,obs)=>{
+  entries.forEach(entry=>{
+   if(entry.isIntersecting){
+    entry.target.classList.add("visible");
+    obs.unobserve(entry.target);
+   }
+  });
+ },{threshold:.12});
+
+ revealItems.forEach(item=>observer.observe(item));
+}else{
+ revealItems.forEach(item=>item.classList.add("visible"));
+}
+</script>
+</body>
+</html>
