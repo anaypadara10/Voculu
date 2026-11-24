@@ -4,719 +4,922 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#071426">
+<meta name="theme-color" content="#050817">
 <title>Technology | VOCULUS</title>
+<meta name="description" content="Explore the software, electronics and mechanical engineering behind VOCULUS.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
-:root{
- --bg:#071426;
- --panel:rgba(17,39,66,.76);
- --blue:#58a6ff;
- --cyan:#65e4ff;
- --white:#f4f8ff;
- --muted:#9aadc5;
- --border:rgba(151,190,230,.15);
+:root {
+  --bg:#050817;
+  --blue:#1677ff;
+  --cyan:#00d9ed;
+  --text:#f4f8ff;
+  --muted:#9caecb;
+  --line:rgba(145,184,255,.15);
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{font-family:'DM Sans',sans-serif;color:var(--white);background:var(--bg);overflow-x:hidden}
-a{text-decoration:none;color:inherit}
+* {margin:0;padding:0;box-sizing:border-box}
 
-.background{
- position:fixed;inset:0;z-index:-2;pointer-events:none;
- background:
- radial-gradient(ellipse at 12% 15%,rgba(26,109,210,.2),transparent 38%),
- radial-gradient(ellipse at 90% 60%,rgba(0,190,255,.1),transparent 35%),
- var(--bg);
+html {scroll-behavior:smooth;scroll-padding-top:110px}
+
+body {
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
 }
-.grid-bg{
- position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.13;
- background-image:linear-gradient(rgba(140,190,255,.1) 1px,transparent 1px),
- linear-gradient(90deg,rgba(140,190,255,.1) 1px,transparent 1px);
- background-size:55px 55px;
+
+.background {
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 10% 15%,rgba(15,89,255,.15),transparent 40%),
+    radial-gradient(ellipse at 90% 70%,rgba(0,210,235,.10),transparent 40%),
+    #050817;
 }
-.orb{
- position:fixed;width:260px;height:260px;border-radius:50%;
- filter:blur(80px);opacity:.15;z-index:-1;pointer-events:none;
- animation:drift 12s ease-in-out infinite alternate;
+
+.grid-bg {
+  position:absolute;
+  inset:0;
+  opacity:.15;
+  background-image:
+    linear-gradient(rgba(110,160,255,.12) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(110,160,255,.12) 1px,transparent 1px);
+  background-size:55px 55px;
 }
-.orb.one{background:#1676ff;top:20%;left:-150px}
-.orb.two{background:#00c8e9;right:-140px;top:65%;animation-delay:-5s}
-@keyframes drift{to{transform:translate(45px,-55px)}}
+
+.orb {
+  position:absolute;
+  width:370px;
+  height:370px;
+  border-radius:50%;
+  filter:blur(110px);
+  opacity:.2;
+  animation:float 13s ease-in-out infinite alternate;
+}
+
+.orb.one {background:#1263ff;top:5%;left:-180px}
+.orb.two {background:#00d9ed;right:-180px;top:50%;animation-delay:-5s}
+
+@keyframes float {
+  to {transform:translate(80px,50px) scale(1.2)}
+}
 
 /* NAVIGATION */
-.navbar{
- position:sticky;top:0;z-index:100;
- background:rgba(7,20,38,.84);backdrop-filter:blur(20px);
- border-bottom:1px solid var(--border);
-}
-.nav-container{
- max-width:1200px;min-height:76px;margin:auto;padding:0 25px;
- display:flex;justify-content:space-between;align-items:center;gap:20px;
-}
-.logo{font:700 25px 'Space Grotesk';letter-spacing:2px}
-.logo span{color:var(--cyan)}
-.nav-links{display:flex;align-items:center;gap:23px}
-.nav-links a{
- position:relative;color:#b6c6da;font-size:12px;font-weight:600;
- transition:color .3s;
-}
-.nav-links a:hover,.nav-links a.active{color:white}
-.nav-links a::after{
- content:"";position:absolute;left:0;bottom:-9px;width:0;height:2px;
- background:var(--cyan);box-shadow:0 0 12px var(--cyan);
- transition:width .3s;
-}
-.nav-links a:hover::after,.nav-links a.active::after{width:100%}
-.menu-toggle{
- display:none;color:white;background:var(--panel);
- border:1px solid var(--border);border-radius:9px;
- padding:8px 12px;font-size:19px;cursor:pointer;
+
+.nav-wrap {
+  position:fixed;
+  top:16px;
+  width:100%;
+  padding:0 5%;
+  z-index:100;
 }
 
-/* COMMON */
-.container{max-width:1120px;width:calc(100% - 50px);margin:auto}
-section{padding:95px 0}
-.eyebrow{
- color:var(--cyan);font-size:11px;font-weight:800;
- letter-spacing:2.5px;text-transform:uppercase;
- display:flex;align-items:center;gap:10px;
+nav {
+  max-width:1250px;
+  margin:auto;
+  height:72px;
+  padding:0 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:rgba(5,11,29,.8);
+  backdrop-filter:blur(22px);
 }
-.eyebrow:before{content:"";width:25px;height:1px;background:var(--cyan)}
-h1,h2,h3{font-family:'Space Grotesk',sans-serif}
-.gradient{
- background:linear-gradient(100deg,#fff,#70c8ff,#75f0f4);
- -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.section-title{font-size:clamp(32px,5vw,47px);line-height:1.15;letter-spacing:-1.4px;margin-top:18px}
-.description{color:var(--muted);font-size:14px;line-height:1.9;max-width:670px;margin-top:17px}
-.center{text-align:center}
-.center .eyebrow{justify-content:center}
-.center .description{margin-left:auto;margin-right:auto}
 
-.btn{
- display:inline-flex;align-items:center;justify-content:center;gap:9px;
- padding:13px 21px;border-radius:10px;font-size:12px;font-weight:800;
- transition:transform .3s,box-shadow .3s,border-color .3s;
+.logo {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:23px;
+  font-weight:700;
+  letter-spacing:2px;
+  color:white;
+  text-decoration:none;
 }
-.primary{background:linear-gradient(110deg,#2685ed,#27bde8);box-shadow:0 8px 25px #258fef40}
-.primary:hover{transform:translateY(-5px);box-shadow:0 14px 35px #258fef70}
-.secondary{border:1px solid #96c3f044;background:#ffffff08}
-.secondary:hover{transform:translateY(-5px);border-color:var(--cyan)}
+
+.logo span {color:var(--cyan)}
+
+.nav-links {
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+
+.nav-links a {
+  color:#b6c4dc;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:600;
+  transition:.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {color:var(--cyan)}
+
+.nav-cta {
+  padding:11px 17px;
+  border-radius:12px;
+  color:white!important;
+  background:linear-gradient(110deg,#1267ff,#00bdd9);
+}
+
+.menu-btn {
+  display:none;
+  border:0;
+  background:none;
+  color:white;
+  font-size:27px;
+  cursor:pointer;
+}
 
 /* HERO */
-.hero{padding:105px 0 85px;text-align:center}
-.hero-badge{
- display:inline-flex;align-items:center;gap:9px;
- padding:9px 15px;border-radius:30px;border:1px solid #5dc6ff40;
- background:#439bff12;color:#b9e8ff;
- font-size:11px;font-weight:700;letter-spacing:1px;
- animation:fadeDown .8s both;
-}
-.hero h1{
- font-size:clamp(43px,7vw,75px);letter-spacing:-3px;
- line-height:1.08;margin-top:27px;animation:fadeUp .9s .1s both;
-}
-.hero .description{margin:23px auto 0;animation:fadeUp .9s .2s both}
-.hero .btn{margin-top:30px;animation:fadeUp .9s .3s both}
 
-/* TECHNOLOGY GRID */
-.tech-grid{
- display:grid;grid-template-columns:repeat(2,1fr);
- gap:20px;margin-top:48px;
-}
-.tech-card{
- padding:29px;border-radius:19px;
- border:1px solid var(--border);
- background:linear-gradient(145deg,rgba(19,47,77,.85),rgba(9,27,48,.85));
- position:relative;overflow:hidden;
- transition:transform .35s,border-color .35s,box-shadow .35s;
-}
-.tech-card:before{
- content:"";position:absolute;width:150px;height:150px;
- border-radius:50%;right:-90px;top:-90px;
- background:#36baff;filter:blur(60px);opacity:0;
- transition:opacity .4s;
-}
-.tech-card:hover{
- transform:translateY(-8px);
- border-color:#67c9ff70;
- box-shadow:0 22px 45px #0003;
-}
-.tech-card:hover:before{opacity:.25}
-.card-icon{
- width:58px;height:58px;border-radius:15px;
- display:grid;place-items:center;font-size:27px;
- background:#2886dc25;border:1px solid #65bfff30;
- margin-bottom:24px;transition:transform .35s;
-}
-.tech-card:hover .card-icon{transform:scale(1.12) rotate(-5deg)}
-.card-number{font-size:10px;color:var(--cyan);font-weight:800;letter-spacing:2px}
-.tech-card h3{font-size:20px;margin-top:9px}
-.tech-card p{font-size:12px;color:var(--muted);line-height:1.9;margin-top:12px}
-.card-tag{
- display:inline-block;margin-top:19px;padding:6px 10px;
- border-radius:30px;background:#ffffff08;border:1px solid var(--border);
- color:#a9dfff;font-size:9px;letter-spacing:1px;font-weight:700;
+.hero {
+  max-width:1100px;
+  margin:auto;
+  padding:190px 6% 90px;
+  text-align:center;
 }
 
-/* SYSTEM ARCHITECTURE */
-.architecture{
- margin-top:48px;padding:35px;border-radius:22px;
- border:1px solid var(--border);
- background:linear-gradient(145deg,#112c4b,#091b30);
+.eyebrow {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:9px 15px;
+  border:1px solid rgba(0,210,240,.25);
+  border-radius:30px;
+  color:#9beeff;
+  background:rgba(0,180,220,.07);
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:700;
+  animation:appear .8s both;
 }
-.architecture-flow{
- display:flex;justify-content:center;align-items:center;
- gap:13px;flex-wrap:wrap;margin-top:35px;
-}
-.arch-box{
- min-width:145px;padding:23px 16px;border-radius:13px;
- text-align:center;background:#ffffff08;border:1px solid #77baff30;
- transition:transform .3s,border-color .3s,box-shadow .3s;
-}
-.arch-box:hover{
- transform:translateY(-7px);border-color:var(--cyan);
- box-shadow:0 12px 30px #278bff25;
-}
-.arch-box span{font-size:27px;display:block;margin-bottom:11px}
-.arch-box strong{font-size:12px;display:block}
-.arch-box small{display:block;color:var(--muted);font-size:10px;margin-top:7px}
-.arch-arrow{font-size:22px;color:var(--cyan);animation:arrowGlow 1.8s infinite}
-@keyframes arrowGlow{50%{opacity:.35;transform:translateX(4px)}}
 
-/* HARDWARE SPOTLIGHT */
-.spotlight{
- display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;
- margin-top:65px;
+.dot {
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 13px var(--cyan);
 }
-.spotlight.reverse .spotlight-visual{order:2}
-.spotlight.reverse .spotlight-copy{order:1}
-.spotlight-visual{
- min-height:300px;border:1px solid var(--border);border-radius:22px;
- background:linear-gradient(145deg,#122d4d,#091b30);
- display:grid;place-items:center;position:relative;overflow:hidden;
-}
-.spotlight-visual:before{
- content:"";position:absolute;width:200px;height:200px;
- background:#238bff;filter:blur(95px);opacity:.2;
-}
-.spotlight-inner{position:relative;text-align:center;padding:25px}
-.spotlight-inner .big-icon{
- font-size:75px;display:block;
- filter:drop-shadow(0 0 22px #49b9ff55);
- animation:float 3s ease-in-out infinite;
-}
-@keyframes float{50%{transform:translateY(-10px)}}
-.spotlight-inner small{
- display:block;color:#a7bfd8;font-size:10px;letter-spacing:2px;margin-top:23px;
-}
-.spotlight-copy .number{font-size:11px;color:var(--cyan);font-weight:800;letter-spacing:2px}
-.spotlight-copy h2{font-size:34px;line-height:1.2;margin-top:15px}
-.spotlight-copy p{font-size:13px;line-height:1.9;color:var(--muted);margin-top:16px}
-.spotlight-copy ul{list-style:none;margin-top:20px}
-.spotlight-copy li{font-size:12px;color:#c4d4e6;margin-top:12px;line-height:1.6}
-.spotlight-copy li:before{content:"✦";color:var(--cyan);margin-right:10px}
 
-/* SERVO ARRAY */
-.servo-array{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.servo{
- width:42px;height:74px;border-radius:8px;position:relative;
- background:linear-gradient(90deg,#17385b,#2b5682,#17385b);
- border:1px solid #78bfff55;
- animation:servoMove 2.3s ease-in-out infinite alternate;
-}
-.servo:before{
- content:"";position:absolute;top:-12px;left:50%;
- transform:translateX(-50%);width:28px;height:12px;
- background:#80c9ff;border-radius:5px;
-}
-.servo:nth-child(even){animation-delay:-1s}
-@keyframes servoMove{to{transform:rotate(12deg)}}
+h1,h2,h3 {font-family:'Space Grotesk',sans-serif}
 
-/* DISPLAY MOCKUP */
-.digit-display{
- display:flex;gap:25px;justify-content:center;align-items:center;
+.hero h1 {
+  font-size:clamp(48px,8vw,85px);
+  line-height:1.05;
+  letter-spacing:-4px;
+  margin:28px 0 20px;
+  animation:appear .9s .1s both;
 }
-.digit{
- display:grid;grid-template-columns:repeat(3,24px);
- grid-template-rows:24px 24px 24px 24px 24px;
- gap:5px;
-}
-.segment{
- border-radius:5px;background:#193b5b;
- border:1px solid #426e91;
- box-shadow:inset 0 0 5px #0005;
-}
-.segment.on{
- background:#62dcff;
- box-shadow:0 0 14px #48caff,0 0 25px #48caff55;
-}
-.segment.horizontal{grid-column:2}
-.segment.left{grid-column:1}
-.segment.right{grid-column:3}
-.segment.bottom{grid-row:5}
-.digit-caption{font-size:10px;color:#a7bfd8;letter-spacing:2px;margin-top:25px}
 
-/* SUMMARY */
-.summary-grid{
- display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:40px;
+.gradient {
+  background:linear-gradient(100deg,#fff,#8cbaff,#00e2ed);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
 }
-.summary-card{
- padding:25px;border:1px solid var(--border);border-radius:15px;
- background:#ffffff06;text-align:center;
- transition:transform .3s,border-color .3s;
+
+.hero p {
+  max-width:700px;
+  margin:auto;
+  color:var(--muted);
+  line-height:1.9;
+  font-size:15px;
+  animation:appear .9s .2s both;
 }
-.summary-card:hover{transform:translateY(-7px);border-color:#65cfff70}
-.summary-card strong{font:700 17px 'Space Grotesk'}
-.summary-card p{font-size:11px;line-height:1.8;color:var(--muted);margin-top:9px}
+
+@keyframes appear {
+  from {opacity:0;transform:translateY(25px)}
+  to {opacity:1;transform:translateY(0)}
+}
+
+/* SECTION */
+
+section {
+  max-width:1150px;
+  margin:auto;
+  padding:75px 6%;
+}
+
+.section-head {
+  text-align:center;
+  margin-bottom:45px;
+}
+
+.kicker {
+  color:var(--cyan);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:3px;
+}
+
+.section-head h2 {
+  font-size:clamp(32px,5vw,49px);
+  letter-spacing:-2px;
+  margin:15px 0;
+}
+
+.section-head p {
+  max-width:680px;
+  margin:auto;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+}
+
+/* TECHNOLOGY CATEGORIES */
+
+.category-label {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:40px 0 22px;
+}
+
+.category-label span {
+  color:var(--cyan);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2px;
+  white-space:nowrap;
+}
+
+.category-label::after {
+  content:"";
+  height:1px;
+  width:100%;
+  background:var(--line);
+}
+
+.tech-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.tech-card {
+  position:relative;
+  padding:28px;
+  min-height:220px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(19,34,65,.75),rgba(8,15,34,.82));
+  transition:.4s;
+}
+
+.tech-card::after {
+  content:"";
+  position:absolute;
+  width:140px;
+  height:140px;
+  right:-65px;
+  bottom:-90px;
+  background:var(--cyan);
+  filter:blur(75px);
+  opacity:.1;
+  transition:.4s;
+}
+
+.tech-card:hover {
+  transform:translateY(-8px);
+  border-color:rgba(0,215,240,.45);
+  box-shadow:0 18px 45px rgba(0,90,220,.13);
+}
+
+.tech-card:hover::after {opacity:.35}
+
+.tech-icon {
+  width:49px;
+  height:49px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:linear-gradient(140deg,rgba(15,110,255,.2),rgba(0,220,230,.13));
+  color:#7feaff;
+  font-size:22px;
+  margin-bottom:22px;
+}
+
+.tech-card h3 {
+  font-size:19px;
+  margin-bottom:11px;
+}
+
+.tech-card p {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
+}
+
+/* SYSTEM PANEL */
+
+.system-panel {
+  padding:35px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:rgba(12,25,51,.6);
+  box-shadow:0 20px 65px rgba(0,0,0,.15);
+}
+
+.system-row {
+  display:grid;
+  grid-template-columns:1fr auto 1fr auto 1fr;
+  gap:15px;
+  align-items:center;
+  text-align:center;
+}
+
+.system-node {
+  padding:23px 12px;
+  border:1px solid rgba(0,210,240,.22);
+  border-radius:16px;
+  background:linear-gradient(145deg,rgba(20,53,96,.7),rgba(7,17,38,.8));
+  transition:.35s;
+}
+
+.system-node:hover {
+  transform:translateY(-6px);
+  border-color:var(--cyan);
+}
+
+.system-node .icon {
+  font-size:29px;
+  margin-bottom:12px;
+}
+
+.system-node h3 {font-size:14px}
+
+.system-node p {
+  color:var(--muted);
+  font-size:11px;
+  margin-top:7px;
+  line-height:1.6;
+}
+
+.system-arrow {
+  color:var(--cyan);
+  font-size:25px;
+  animation:pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  to {opacity:.35;transform:translateX(4px)}
+}
+
+.system-caption {
+  color:#8199ba;
+  text-align:center;
+  font-size:11px;
+  letter-spacing:1px;
+  margin-top:25px;
+}
+
+/* SERVO SECTION */
+
+.servo-panel {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:35px;
+  padding:35px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:linear-gradient(145deg,rgba(18,36,70,.7),rgba(8,15,34,.8));
+}
+
+.servo-visual {
+  min-height:260px;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+
+.digit-display {
+  display:grid;
+  grid-template-columns:repeat(2,80px);
+  gap:22px;
+  align-items:center;
+}
+
+.seven-digit {
+  position:relative;
+  width:80px;
+  height:150px;
+}
+
+.segment {
+  position:absolute;
+  background:linear-gradient(90deg,#1267ff,#00d9ed);
+  border-radius:5px;
+  box-shadow:0 0 15px rgba(0,210,240,.4);
+  opacity:.85;
+}
+
+.segment.a,.segment.g,.segment.d {
+  width:43px;
+  height:9px;
+  left:18px;
+}
+
+.segment.a {top:0}
+.segment.g {top:70px}
+.segment.d {bottom:0}
+
+.segment.b,.segment.c,.segment.e,.segment.f {
+  width:9px;
+  height:53px;
+}
+
+.segment.b {right:5px;top:6px}
+.segment.c {right:5px;bottom:6px}
+.segment.e {left:5px;bottom:6px}
+.segment.f {left:5px;top:6px}
+
+.servo-copy h2 {
+  font-size:30px;
+  margin-bottom:18px;
+}
+
+.servo-copy p {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.9;
+  margin-bottom:15px;
+}
+
+.servo-copy strong {color:#83eaff}
+
+/* TECH FACTS */
+
+.facts {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.fact {
+  padding:25px 15px;
+  text-align:center;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:rgba(15,29,56,.5);
+}
+
+.fact strong {
+  display:block;
+  color:var(--cyan);
+  font-family:'Space Grotesk',sans-serif;
+  font-size:35px;
+}
+
+.fact span {
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:8px;
+  letter-spacing:1px;
+}
+
+/* NOTE */
+
+.note {
+  margin-top:30px;
+  padding:20px 23px;
+  border-left:3px solid var(--cyan);
+  border-radius:0 12px 12px 0;
+  background:rgba(0,180,220,.06);
+  color:#b9cce5;
+  font-size:12px;
+  line-height:1.8;
+}
 
 /* CTA */
-.cta{
- padding:55px 30px;border-radius:23px;text-align:center;
- border:1px solid #5bbdff40;
- background:linear-gradient(120deg,#124b82a6,#092644dc);
- position:relative;overflow:hidden;
+
+.cta {
+  max-width:1050px;
+  margin:30px auto 100px;
+  padding:65px 25px;
+  text-align:center;
+  border:1px solid rgba(0,195,240,.23);
+  border-radius:25px;
+  background:radial-gradient(ellipse at top,rgba(0,130,255,.17),transparent 70%),rgba(13,27,54,.65);
 }
-.cta:before{
- content:"";position:absolute;inset:-50%;
- background:conic-gradient(from 0deg,transparent,#4ab5ff18,transparent 35%);
- animation:rotate 16s linear infinite;
+
+.cta h2 {
+  font-size:clamp(30px,5vw,45px);
+  margin:14px 0;
 }
-@keyframes rotate{to{transform:rotate(360deg)}}
-.cta-content{position:relative}
-.cta h2{font-size:clamp(30px,5vw,45px);margin-top:17px}
-.cta p{font-size:13px;color:#b0c4dc;line-height:1.8;max-width:590px;margin:15px auto 0}
+
+.cta p {
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:27px;
+}
+
+.btn {
+  display:inline-block;
+  padding:14px 23px;
+  border-radius:12px;
+  color:white;
+  background:linear-gradient(110deg,#1267ff,#00bdd9);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+  transition:.3s;
+}
+
+.btn:hover {
+  transform:translateY(-5px);
+  box-shadow:0 12px 30px rgba(0,160,255,.25);
+}
 
 /* FOOTER */
-footer{padding:40px 0;border-top:1px solid var(--border);background:#030c18a8}
-.footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:25px}
-.footer-brand{font:700 20px 'Space Grotesk';letter-spacing:2px}
-.footer-brand span{color:var(--cyan)}
-.footer-text{font-size:11px;color:var(--muted);margin-top:7px}
-.footer-links{display:flex;gap:17px;flex-wrap:wrap}
-.footer-links a{font-size:11px;color:var(--muted);transition:color .3s}
-.footer-links a:hover{color:var(--cyan)}
-.copyright{border-top:1px solid var(--border);margin-top:28px;padding-top:20px;text-align:center;color:#71869f;font-size:10px}
 
-/* REVEALS */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+footer {
+  padding:35px 6%;
+  text-align:center;
+  border-top:1px solid var(--line);
+  color:#7185a7;
+  font-size:11px;
+  line-height:2;
+}
+
+footer strong {color:white;letter-spacing:2px}
+footer a {color:#7edff0;text-decoration:none}
+
+/* REVEAL */
+
+.reveal {
+  opacity:0;
+  transform:translateY(30px);
+  transition:.8s ease;
+}
+
+.reveal.visible {
+  opacity:1;
+  transform:translateY(0);
+}
 
 /* RESPONSIVE */
-@media(max-width:850px){
- .nav-links{gap:12px}
- .nav-links a{font-size:10px}
- .spotlight{gap:28px}
+
+@media(max-width:850px) {
+  .tech-grid {grid-template-columns:repeat(2,1fr)}
+  .system-row {grid-template-columns:1fr}
+  .system-arrow {transform:rotate(90deg)}
+  .servo-panel {grid-template-columns:1fr}
 }
-@media(max-width:700px){
- .nav-container{min-height:68px}
- .menu-toggle{display:block}
- .nav-links{
-  display:none;position:absolute;top:68px;left:0;right:0;
-  background:#071426f7;padding:23px 25px;
-  flex-direction:column;align-items:flex-start;gap:22px;
-  border-bottom:1px solid var(--border);
- }
- .nav-links.open{display:flex}
- .nav-links a{font-size:14px}
- .hero{padding:75px 0}
- section{padding:70px 0}
- .tech-grid{grid-template-columns:1fr}
- .spotlight{grid-template-columns:1fr;gap:25px;margin-top:45px}
- .spotlight.reverse .spotlight-visual,.spotlight.reverse .spotlight-copy{order:initial}
- .spotlight-copy h2{font-size:29px}
- .summary-grid{grid-template-columns:1fr}
- .architecture{padding:22px}
- .arch-arrow{transform:rotate(90deg)}
- .footer-content{flex-direction:column;align-items:flex-start}
+
+@media(max-width:650px) {
+  .nav-wrap {padding:0 12px}
+  nav {height:64px;padding:0 17px}
+  .logo {font-size:20px}
+  .menu-btn {display:block}
+
+  .nav-links {
+    display:none;
+    position:absolute;
+    top:73px;
+    left:12px;
+    right:12px;
+    padding:22px;
+    border-radius:18px;
+    background:rgba(7,16,37,.98);
+    border:1px solid var(--line);
+    flex-direction:column;
+    align-items:stretch;
+    gap:20px;
+  }
+
+  .nav-links.open {display:flex}
+  .nav-links a {text-align:center;padding:8px}
+
+  .hero {padding:155px 6% 65px}
+  .hero h1 {letter-spacing:-2px}
+  section {padding:60px 6%}
+  .tech-grid {grid-template-columns:1fr}
+  .servo-panel {padding:23px}
+  .facts {grid-template-columns:1fr}
+  .cta {margin:0 15px 70px;padding:50px 20px}
 }
-@media(max-width:420px){
- .container{width:calc(100% - 34px)}
- .architecture-flow{gap:10px}
- .arch-box{min-width:125px;padding:17px 10px}
- .digit{grid-template-columns:repeat(3,19px);grid-template-rows:19px 19px 19px 19px 19px}
-}
-@media(prefers-reduced-motion:reduce){
- *,*::before,*::after{
-  animation-duration:.01ms!important;animation-iteration-count:1!important;
-  transition-duration:.01ms!important;scroll-behavior:auto!important;
- }
- .reveal{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+
+  .reveal {opacity:1;transform:none}
 }
 </style>
 </head>
 
 <body>
-<div class="background"></div>
-<div class="grid-bg"></div>
-<div class="orb one"></div>
-<div class="orb two"></div>
 
-<header class="navbar">
- <div class="nav-container">
+<div class="background">
+  <div class="grid-bg"></div>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+</div>
+
+<div class="nav-wrap">
+<nav>
   <a href="index.html" class="logo">VOCU<span>LUS</span></a>
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-  <nav class="nav-links" id="navLinks">
-   <a href="index.html">Home</a>
-   <a href="how-it-works.html">How It Works</a>
-   <a href="technology.html" class="active">Technology</a>
-   <a href="demonstration.html">Demonstration</a>
-   <a href="our-journey.html">Our Journey</a>
-   <a href="gallery.html">Gallery</a>
-   <a href="creators.html">Creators</a>
-  </nav>
- </div>
-</header>
+
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="technology.html" class="active">Technology</a>
+    <a href="demonstration.html">Demonstration</a>
+    <a href="our-journey.html">Our Journey</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="creators.html" class="nav-cta">Meet Creators ↗</a>
+  </div>
+</nav>
+</div>
 
 <main>
 
 <!-- HERO -->
-<section class="hero">
- <div class="container">
-  <div class="hero-badge">✦ THE ENGINEERING BEHIND VOCULUS</div>
-  <h1>Where Hardware<br>Meets <span class="gradient">Intelligence.</span></h1>
-  <p class="description">
-   VOCULUS brings together programming, electronics and mechanical engineering. Discover the components and technologies that transform spoken mathematics into physical results.
-  </p>
-  <a href="#components" class="btn primary">Explore the Technology ↓</a>
- </div>
-</section>
 
-<!-- COMPONENTS -->
-<section id="components">
- <div class="container">
-  <div class="center reveal">
-   <div class="eyebrow">THE TECHNOLOGY STACK</div>
-   <h2 class="section-title">The Components Behind <span class="gradient">the Innovation.</span></h2>
-   <p class="description">Each component has a specific role in the VOCULUS system, working together to complete a calculation.</p>
+<header class="hero">
+  <div class="eyebrow">
+    <span class="dot"></span>
+    THE ENGINEERING BEHIND VOCULUS
   </div>
+
+  <h1>
+    Built with <span class="gradient">technology.</span><br>
+    Driven by innovation.
+  </h1>
+
+  <p>
+    VOCULUS combines programming, electronics and mechanical engineering
+    to create a calculator controlled through spoken mathematical instructions.
+  </p>
+</header>
+
+<!-- SOFTWARE -->
+
+<section>
+  <div class="section-head reveal">
+    <span class="kicker">01 / SOFTWARE</span>
+    <h2>The intelligence of the system.</h2>
+    <p>Software converts a spoken instruction into a mathematical result that the hardware can understand.</p>
+  </div>
+
+  <div class="category-label"><span>SOFTWARE COMPONENTS</span></div>
 
   <div class="tech-grid">
-   <div class="tech-card reveal">
-    <div class="card-icon">🐍</div>
-    <div class="card-number">01 / SOFTWARE</div>
-    <h3>Python</h3>
-    <p>Python handles speech recognition, interprets spoken mathematical expressions, performs arithmetic operations and sends the result to the Arduino.</p>
-    <span class="card-tag">PROCESSING LANGUAGE</span>
-   </div>
 
-   <div class="tech-card reveal">
-    <div class="card-icon">🧠</div>
-    <div class="card-number">02 / CONTROLLER</div>
-    <h3>Arduino Mega</h3>
-    <p>The Arduino Mega receives the calculated result through serial communication and controls the servo motors according to the required digit patterns.</p>
-    <span class="card-tag">HARDWARE CONTROL</span>
-   </div>
+    <article class="tech-card reveal">
+      <div class="tech-icon">🐍</div>
+      <h3>Python</h3>
+      <p>Python handles the recognized mathematical instruction, performs arithmetic operations and prepares the result for transmission.</p>
+    </article>
 
-   <div class="tech-card reveal">
-    <div class="card-icon">🎙️</div>
-    <div class="card-number">03 / INPUT</div>
-    <h3>Microphone</h3>
-    <p>The microphone captures spoken mathematical expressions and provides the audio input used by the speech-recognition software.</p>
-    <span class="card-tag">AUDIO INPUT</span>
-   </div>
+    <article class="tech-card reveal">
+      <div class="tech-icon">🎙</div>
+      <h3>Speech Recognition</h3>
+      <p>Speech recognition converts spoken words into text so that the computer can interpret the mathematical instruction.</p>
+    </article>
 
-   <div class="tech-card reveal">
-    <div class="card-icon">⚙️</div>
-    <div class="card-number">04 / MOVEMENT</div>
-    <h3>14 Servo Motors</h3>
-    <p>Seven servo motors operate each digit. Their movement positions the individual segments to create the required numerical display.</p>
-    <span class="card-tag">MECHANICAL ACTUATION</span>
-   </div>
+    <article class="tech-card reveal">
+      <div class="tech-icon">↔</div>
+      <h3>Serial Communication</h3>
+      <p>Serial communication transfers the calculated result from the computer to the Arduino controller.</p>
+    </article>
 
-   <div class="tech-card reveal">
-    <div class="card-icon">🔢</div>
-    <div class="card-number">05 / OUTPUT</div>
-    <h3>Seven-Segment Display</h3>
-    <p>Two physical seven-segment digits represent the final numerical answer through the positioning of their individual segments.</p>
-    <span class="card-tag">PHYSICAL OUTPUT</span>
-   </div>
-
-   <div class="tech-card reveal">
-    <div class="card-icon">🔌</div>
-    <div class="card-number">06 / COMMUNICATION</div>
-    <h3>Serial Communication</h3>
-    <p>Serial communication connects the Python program running on the computer with the Arduino Mega, transferring the calculated result.</p>
-    <span class="card-tag">DATA TRANSFER</span>
-   </div>
   </div>
- </div>
+</section>
+
+<!-- HARDWARE -->
+
+<section>
+  <div class="section-head reveal">
+    <span class="kicker">02 / HARDWARE</span>
+    <h2>The machinery behind the answer.</h2>
+    <p>Electronic and mechanical components work together to create the physical display.</p>
+  </div>
+
+  <div class="category-label"><span>HARDWARE COMPONENTS</span></div>
+
+  <div class="tech-grid">
+
+    <article class="tech-card reveal">
+      <div class="tech-icon">⚡</div>
+      <h3>Arduino Mega</h3>
+      <p>The microcontroller receives the result and controls the servo positions required to form the displayed digits.</p>
+    </article>
+
+    <article class="tech-card reveal">
+      <div class="tech-icon">⚙</div>
+      <h3>14 Servo Motors</h3>
+      <p>Each of the two digits contains seven individually controlled physical segments, operated by servo motors.</p>
+    </article>
+
+    <article class="tech-card reveal">
+      <div class="tech-icon">🔋</div>
+      <h3>Power Supply</h3>
+      <p>The servo system uses an appropriately rated external power source, while the Arduino is powered separately through USB.</p>
+    </article>
+
+    <article class="tech-card reveal">
+      <div class="tech-icon">🔌</div>
+      <h3>Wiring System</h3>
+      <p>Signal, power and ground connections allow the controller and servo motors to work together.</p>
+    </article>
+
+    <article class="tech-card reveal">
+      <div class="tech-icon">◈</div>
+      <h3>Physical Segments</h3>
+      <p>Seven movable segments combine to form each digit, creating a mechanical seven-segment-style display.</p>
+    </article>
+
+    <article class="tech-card reveal">
+      <div class="tech-icon">▣</div>
+      <h3>Structural Base</h3>
+      <p>The base supports the components and helps maintain the alignment of the two-digit display.</p>
+    </article>
+
+  </div>
 </section>
 
 <!-- ARCHITECTURE -->
-<section style="background:#ffffff05">
- <div class="container">
-  <div class="center reveal">
-   <div class="eyebrow">SYSTEM ARCHITECTURE</div>
-   <h2 class="section-title">How Everything <span class="gradient">Connects.</span></h2>
-   <p class="description">The complete system follows a sequence of connected software and hardware operations.</p>
-  </div>
 
-  <div class="architecture reveal">
-   <div class="architecture-flow">
-    <div class="arch-box">
-     <span>🎙️</span>
-     <strong>Microphone</strong>
-     <small>Voice input</small>
-    </div>
-    <div class="arch-arrow">→</div>
-    <div class="arch-box">
-     <span>🐍</span>
-     <strong>Python</strong>
-     <small>Recognition & calculation</small>
-    </div>
-    <div class="arch-arrow">→</div>
-    <div class="arch-box">
-     <span>🧠</span>
-     <strong>Arduino Mega</strong>
-     <small>Control signals</small>
-    </div>
-    <div class="arch-arrow">→</div>
-    <div class="arch-box">
-     <span>⚙️</span>
-     <strong>Servo Motors</strong>
-     <small>Segment movement</small>
-    </div>
-    <div class="arch-arrow">→</div>
-    <div class="arch-box">
-     <span>🔢</span>
-     <strong>Display</strong>
-     <small>Numerical result</small>
-    </div>
-   </div>
-  </div>
- </div>
-</section>
-
-<!-- PYTHON -->
 <section>
- <div class="container">
-  <div class="spotlight">
-   <div class="spotlight-visual reveal">
-    <div class="spotlight-inner">
-     <span class="big-icon">🐍</span>
-     <small>SOFTWARE · PYTHON</small>
-    </div>
-   </div>
-   <div class="spotlight-copy reveal">
-    <div class="number">SOFTWARE ENGINEERING</div>
-    <h2>Python: The <span class="gradient">Thinking Layer.</span></h2>
-    <p>Python acts as the software foundation of VOCULUS. It processes the recognised speech, performs the required calculation and communicates the result to the Arduino.</p>
-    <ul>
-     <li>Speech recognition through a Python library.</li>
-     <li>Interpretation of mathematical expressions.</li>
-     <li>Arithmetic processing.</li>
-     <li>Serial communication with the Arduino.</li>
-    </ul>
-   </div>
+  <div class="section-head reveal">
+    <span class="kicker">03 / SYSTEM ARCHITECTURE</span>
+    <h2>How the technologies connect.</h2>
+    <p>The computer handles recognition and calculation. The Arduino controls the physical display.</p>
   </div>
- </div>
-</section>
 
-<!-- ARDUINO -->
-<section style="background:#ffffff05">
- <div class="container">
-  <div class="spotlight reverse">
-   <div class="spotlight-visual reveal">
-    <div class="spotlight-inner">
-     <span class="big-icon">🧠</span>
-     <small>HARDWARE · ARDUINO MEGA</small>
-    </div>
-   </div>
-   <div class="spotlight-copy reveal">
-    <div class="number">EMBEDDED SYSTEMS</div>
-    <h2>Arduino Mega: <span class="gradient">The Controller.</span></h2>
-    <p>The Arduino Mega acts as the hardware control unit. It receives the result from Python and sends the required control signals to the servo motors.</p>
-    <ul>
-     <li>Receives data through serial communication.</li>
-     <li>Maps numerical values to display patterns.</li>
-     <li>Controls 14 servo motor positions.</li>
-     <li>Coordinates the two-digit display.</li>
-    </ul>
-   </div>
-  </div>
- </div>
-</section>
+  <div class="system-panel reveal">
 
-<!-- SERVOS -->
-<section>
- <div class="container">
-  <div class="spotlight">
-   <div class="spotlight-visual reveal">
-    <div class="spotlight-inner">
-     <div class="servo-array">
-      <div class="servo"></div><div class="servo"></div>
-      <div class="servo"></div><div class="servo"></div>
-      <div class="servo"></div><div class="servo"></div>
-      <div class="servo"></div>
-     </div>
-     <small>14 SERVO MOTORS · 7 PER DIGIT</small>
-    </div>
-   </div>
-   <div class="spotlight-copy reveal">
-    <div class="number">MECHANICAL ENGINEERING</div>
-    <h2>Servo Motors: <span class="gradient">Movement With Purpose.</span></h2>
-    <p>VOCULUS uses 14 servo motors, with seven dedicated to each digit. Each motor positions a corresponding segment of the display.</p>
-    <ul>
-     <li>Seven controlled segments for each digit.</li>
-     <li>Individual servo positioning.</li>
-     <li>Two-digit numerical output.</li>
-     <li>Arduino-controlled mechanical movement.</li>
-    </ul>
-   </div>
-  </div>
- </div>
-</section>
+    <div class="system-row">
 
-<!-- DISPLAY -->
-<section style="background:#ffffff05">
- <div class="container">
-  <div class="spotlight reverse">
-   <div class="spotlight-visual reveal">
-    <div class="spotlight-inner">
-     <div class="digit-display">
-      <div class="digit" aria-label="Illustrative seven-segment digit">
-       <div class="segment horizontal on"></div>
-       <div class="segment left on"></div>
-       <div class="segment right"></div>
-       <div class="segment horizontal on"></div>
-       <div class="segment left"></div>
-       <div class="segment right on"></div>
-       <div class="segment horizontal on"></div>
+      <div class="system-node">
+        <div class="icon">🎙</div>
+        <h3>Computer</h3>
+        <p>Microphone, speech recognition and Python processing</p>
       </div>
-      <div class="digit">
-       <div class="segment horizontal on"></div>
-       <div class="segment left"></div>
-       <div class="segment right on"></div>
-       <div class="segment horizontal on"></div>
-       <div class="segment left on"></div>
-       <div class="segment right on"></div>
-       <div class="segment horizontal on"></div>
+
+      <div class="system-arrow">→</div>
+
+      <div class="system-node">
+        <div class="icon">⚡</div>
+        <h3>Arduino Mega</h3>
+        <p>Receives the result and controls servo positions</p>
       </div>
-     </div>
-     <div class="digit-caption">ILLUSTRATIVE SEGMENT PATTERN</div>
+
+      <div class="system-arrow">→</div>
+
+      <div class="system-node">
+        <div class="icon">⚙</div>
+        <h3>Servo Display</h3>
+        <p>Fourteen motors position the two digits</p>
+      </div>
+
     </div>
-   </div>
-   <div class="spotlight-copy reveal">
-    <div class="number">VISUAL OUTPUT</div>
-    <h2>Seven Segments. <span class="gradient">Endless Possibilities.</span></h2>
-    <p>The physical display uses seven individual segments for each digit. By positioning these segments in different combinations, the system represents numerical values.</p>
-    <ul>
-     <li>Two separate digit positions.</li>
-     <li>Seven segments in each digit.</li>
-     <li>Fourteen servo-operated segments in total.</li>
-     <li>A physical display rather than a conventional electronic screen.</li>
-    </ul>
-   </div>
+
+    <p class="system-caption">SOFTWARE → CONTROLLER → MECHANICAL OUTPUT</p>
   </div>
- </div>
 </section>
 
-<!-- SUMMARY -->
+<!-- MECHANICAL DISPLAY -->
+
 <section>
- <div class="container">
-  <div class="center reveal">
-   <div class="eyebrow">THE BIG PICTURE</div>
-   <h2 class="section-title">One System. <span class="gradient">Multiple Disciplines.</span></h2>
-   <p class="description">VOCULUS combines different areas of technology into one working project.</p>
+  <div class="section-head reveal">
+    <span class="kicker">04 / MECHANICAL ENGINEERING</span>
+    <h2>Fourteen motors. Two digits.</h2>
+    <p>The display uses movable physical segments instead of a conventional electronic LED display.</p>
   </div>
 
-  <div class="summary-grid">
-   <div class="summary-card reveal">
-    <strong>Programming</strong>
-    <p>Python, speech recognition and arithmetic processing.</p>
-   </div>
-   <div class="summary-card reveal">
-    <strong>Electronics</strong>
-    <p>Arduino Mega, serial communication and servo control.</p>
-   </div>
-   <div class="summary-card reveal">
-    <strong>Mechanical Design</strong>
-    <p>Servo-operated segments and a two-digit physical display.</p>
-   </div>
+  <div class="servo-panel reveal">
+
+    <div class="servo-visual">
+      <div class="digit-display">
+
+        <div class="seven-digit">
+          <div class="segment a"></div>
+          <div class="segment b"></div>
+          <div class="segment c"></div>
+          <div class="segment d"></div>
+          <div class="segment e"></div>
+          <div class="segment f"></div>
+          <div class="segment g"></div>
+        </div>
+
+        <div class="seven-digit">
+          <div class="segment a"></div>
+          <div class="segment b"></div>
+          <div class="segment c"></div>
+          <div class="segment d"></div>
+          <div class="segment e"></div>
+          <div class="segment f"></div>
+          <div class="segment g"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="servo-copy">
+      <h2>Mechanical digit formation</h2>
+      <p>Each digit consists of <strong>seven individual segments</strong>. Each segment is positioned by its own servo motor.</p>
+      <p>For two digits, the system uses <strong>14 servo motors</strong> in total.</p>
+      <p>The Arduino sends control signals to position the segments and form the required numerical display.</p>
+    </div>
+
   </div>
- </div>
+
+  <div class="facts reveal">
+    <div class="fact">
+      <strong>14</strong>
+      <span>SERVO MOTORS</span>
+    </div>
+    <div class="fact">
+      <strong>2</strong>
+      <span>DIGITS</span>
+    </div>
+    <div class="fact">
+      <strong>7</strong>
+      <span>SEGMENTS PER DIGIT</span>
+    </div>
+  </div>
+
+  <div class="note reveal">
+    <strong>Engineering note:</strong> The illustrated seven-segment shapes are visual representations of the mechanical display. They are not a live visualization of the servo positions.
+  </div>
 </section>
 
 <!-- CTA -->
-<section style="padding-top:10px">
- <div class="container">
-  <div class="cta reveal">
-   <div class="cta-content">
-    <div class="eyebrow" style="justify-content:center">SEE THE SYSTEM IN ACTION</div>
-    <h2>Technology That <span class="gradient">Comes Alive.</span></h2>
-    <p>Now that you know what powers VOCULUS, explore how a spoken calculation becomes a physical numerical result.</p>
-    <a href="demonstration.html" class="btn primary" style="margin-top:25px">View Demonstration →</a>
-   </div>
-  </div>
- </div>
-</section>
+
+<div class="cta reveal">
+  <span class="kicker">FROM ENGINEERING TO EXECUTION</span>
+  <h2>See the project in action.</h2>
+  <p>Explore the demonstration page to understand the intended calculation sequence.</p>
+  <a href="demonstration.html" class="btn">Explore Demonstration ↗</a>
+</div>
 
 </main>
 
 <footer>
- <div class="container">
-  <div class="footer-content">
-   <div>
-    <div class="footer-brand">VOCU<span>LUS</span></div>
-    <div class="footer-text">SPEAK. CALCULATE. SIMPLIFY.</div>
-   </div>
-   <div class="footer-links">
-    <a href="index.html">Home</a>
-    <a href="how-it-works.html">How It Works</a>
-    <a href="technology.html">Technology</a>
-    <a href="demonstration.html">Demonstration</a>
-    <a href="our-journey.html">Our Journey</a>
-    <a href="gallery.html">Gallery</a>
+  <strong>VOCULUS</strong>
+  <p>SPEAK. CALCULATE. SIMPLIFY.</p>
+  <p>Designed and developed by Anay &amp; Sankalp</p>
+  <p>Tejas International School · Class VII</p>
+  <p>© 2026 VOCULUS Project. All rights reserved.</p>
+  <p>
+    <a href="index.html">Home</a> ·
+    <a href="how-it-works.html">How It Works</a> ·
     <a href="creators.html">Creators</a>
-   </div>
-  </div>
-  <div class="copyright">© 2026 VOCULUS · Created by Anay &amp; Sankalp · Tejas International School</div>
- </div>
+  </p>
 </footer>
 
 <script>
-/* MOBILE NAVIGATION */
-const menuToggle=document.getElementById("menuToggle");
-const navLinks=document.getElementById("navLinks");
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
 
-menuToggle.addEventListener("click",()=>{
- const open=navLinks.classList.toggle("open");
- menuToggle.textContent=open?"✕":"☰";
- menuToggle.setAttribute("aria-expanded",open);
+menuBtn.addEventListener("click", () => {
+  const isOpen = navLinks.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", isOpen);
+  menuBtn.textContent = isOpen ? "×" : "☰";
 });
 
-navLinks.querySelectorAll("a").forEach(link=>{
- link.addEventListener("click",()=>{
-  navLinks.classList.remove("open");
-  menuToggle.textContent="☰";
-  menuToggle.setAttribute("aria-expanded","false");
- });
-});
-
-/* SCROLL REVEAL */
-const revealItems=document.querySelectorAll(".reveal");
-
-if("IntersectionObserver" in window){
- const observer=new IntersectionObserver((entries,obs)=>{
-  entries.forEach(entry=>{
-   if(entry.isIntersecting){
-    entry.target.classList.add("visible");
-    obs.unobserve(entry.target);
-   }
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.textContent = "☰";
   });
- },{threshold:.12});
+});
 
- revealItems.forEach(item=>observer.observe(item));
-}else{
- revealItems.forEach(item=>item.classList.add("visible"));
-}
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.12});
+
+document.querySelectorAll(".reveal").forEach(element => {
+  observer.observe(element);
+});
 </script>
+
 </body>
 </html>
