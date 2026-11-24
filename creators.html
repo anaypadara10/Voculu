@@ -5,423 +5,393 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Creators | VOCULUS</title>
-<meta name="description" content="Meet the creators behind VOCULUS, the voice-powered calculator.">
+
 <style>
-:root{
-  --bg:#050b18;
-  --panel:rgba(15,29,53,.78);
-  --blue:#3185ff;
-  --cyan:#36e5ff;
-  --white:#f4f8ff;
-  --muted:#9aacc8;
-  --border:rgba(107,165,255,.17);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--white);
-  overflow-x:hidden;
-}
-body::before{
-  content:"";position:fixed;inset:0;
-  pointer-events:none;z-index:-2;
-  background-image:
-    linear-gradient(rgba(76,132,210,.055) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(76,132,210,.055) 1px,transparent 1px);
-  background-size:48px 48px;
-}
-.orb{
-  position:fixed;width:400px;height:400px;
-  border-radius:50%;filter:blur(110px);
-  opacity:.16;z-index:-1;pointer-events:none;
-}
-.orb.one{background:#126aff;top:8%;left:-200px}
-.orb.two{background:#00d9ff;right:-200px;top:55%}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-nav{
-  position:sticky;top:0;z-index:20;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:19px 7%;
-  background:rgba(5,11,24,.82);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
-}
-.logo{
-  color:white;text-decoration:none;
-  font-size:23px;font-weight:900;letter-spacing:3px;
-}
-.logo span{color:var(--cyan)}
-.nav-links{display:flex;align-items:center;gap:23px}
-.nav-links a{
-  color:#aebdd5;text-decoration:none;
-  font-size:12px;transition:.3s;
-}
-.nav-links a:hover,.nav-links a.active{color:var(--cyan)}
-.menu-btn{
-  display:none;background:none;
-  border:1px solid var(--border);
-  color:white;border-radius:8px;
-  padding:8px 12px;font-size:20px;
+:root {
+  --bg: #050b18;
+  --blue: #1687ff;
+  --cyan: #00e5ff;
+  --text: #edf6ff;
+  --muted: #91a6bf;
 }
 
-.hero{text-align:center;padding:105px 20px 75px}
-.eyebrow{
-  display:inline-block;color:var(--cyan);
-  border:1px solid rgba(54,229,255,.28);
-  background:rgba(54,229,255,.07);
-  border-radius:30px;padding:9px 17px;
-  font-size:11px;letter-spacing:2px;margin-bottom:25px;
-}
-h1{
-  font-size:clamp(43px,7vw,76px);
-  line-height:1.08;letter-spacing:-3px;font-weight:900;
-}
-.gradient{
-  background:linear-gradient(90deg,#fff,#65dfff,#438cff,#fff);
-  background-size:250%;
-  -webkit-background-clip:text;
-  background-clip:text;color:transparent;
-  animation:gradient 6s linear infinite;
-}
-@keyframes gradient{to{background-position:250% center}}
-.hero p{
-  color:var(--muted);max-width:650px;
-  margin:24px auto 0;line-height:1.8;font-size:15px;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Inter, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
 }
 
-.section{
-  max-width:1100px;margin:auto;
-  padding:30px 24px 85px;
-}
-.section-heading{text-align:center;margin-bottom:40px}
-.section-heading h2{font-size:32px;margin-bottom:12px}
-.section-heading p{
-  color:var(--muted);font-size:14px;line-height:1.7;
-}
-
-/* Creator cards */
-.creators{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:24px;
-}
-.creator-card{
-  position:relative;overflow:hidden;
-  border:1px solid var(--border);
-  border-radius:22px;padding:35px;
-  background:linear-gradient(145deg,rgba(18,37,68,.92),rgba(8,18,36,.94));
-  transition:.4s;
-}
-.creator-card::before{
-  content:"";position:absolute;
-  width:220px;height:220px;
-  background:var(--blue);filter:blur(110px);
-  opacity:.13;right:-100px;top:-100px;
-}
-.creator-card:hover{
-  transform:translateY(-8px);
-  border-color:rgba(54,229,255,.5);
-  box-shadow:0 20px 50px rgba(0,0,0,.25);
-}
-.avatar{
-  width:90px;height:90px;
-  border-radius:22px;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(140deg,#1b73df,#30d8f5);
-  color:#04101f;font-size:30px;font-weight:900;
-  box-shadow:0 0 35px rgba(54,229,255,.2);
-  margin-bottom:27px;
-  position:relative;
-}
-.creator-number{
-  color:var(--cyan);font-size:10px;
-  letter-spacing:2px;margin-bottom:12px;
-  position:relative;
-}
-.creator-card h3{
-  font-size:29px;margin-bottom:9px;
-  position:relative;
-}
-.creator-role{
-  color:var(--cyan);font-size:11px;
-  letter-spacing:1.5px;margin-bottom:20px;
-  position:relative;
-}
-.creator-card p{
-  color:var(--muted);font-size:13px;
-  line-height:1.9;position:relative;
-}
-.creator-tags{
-  display:flex;gap:9px;flex-wrap:wrap;
-  margin-top:23px;position:relative;
-}
-.creator-tags span{
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.035);
-  color:#b7c9e3;border-radius:20px;
-  padding:8px 12px;font-size:10px;
-}
-
-/* Shared vision */
-.vision{
-  padding:40px;border:1px solid var(--border);
-  border-radius:22px;
-  background:linear-gradient(120deg,rgba(24,72,130,.3),rgba(0,202,255,.07));
-  text-align:center;
-}
-.vision h2{font-size:30px;margin-bottom:17px}
-.vision p{
-  color:var(--muted);font-size:14px;
-  line-height:1.9;max-width:750px;margin:auto;
-}
-
-/* Values */
-.values{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:17px;
-}
-.value-card{
-  padding:27px 22px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:17px;transition:.3s;
-}
-.value-card:hover{
-  transform:translateY(-6px);
-  border-color:rgba(54,229,255,.5);
-}
-.value-icon{font-size:28px;margin-bottom:18px}
-.value-card h3{font-size:17px;margin-bottom:11px}
-.value-card p{
-  color:var(--muted);font-size:12px;line-height:1.8;
-}
-
-/* Final */
-.final{
-  text-align:center;padding:70px 25px;
-  border:1px solid var(--border);
-  border-radius:23px;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
   background:
-    radial-gradient(ellipse at center,rgba(49,133,255,.17),transparent 70%),
-    rgba(10,22,42,.8);
-}
-.final h2{
-  font-size:clamp(30px,5vw,48px);
-  line-height:1.2;margin-bottom:17px;
-}
-.final p{
-  color:var(--muted);font-size:14px;
-  line-height:1.8;max-width:620px;margin:auto;
-}
-.final .tagline{
-  color:var(--cyan);font-size:11px;
-  letter-spacing:3px;margin-top:27px;
+    radial-gradient(circle at 15% 20%, #0753a52c, transparent 35%),
+    radial-gradient(circle at 85% 70%, #00c9ff18, transparent 35%),
+    linear-gradient(#07101f, #030813);
 }
 
-footer{
-  padding:35px 7%;
-  border-top:1px solid var(--border);
-  display:flex;justify-content:space-between;
-  gap:20px;flex-wrap:wrap;
-  color:#8193b0;font-size:11px;
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .13;
+  background-image:
+    linear-gradient(#5daaff20 1px, transparent 1px),
+    linear-gradient(90deg, #5daaff20 1px, transparent 1px);
+  background-size: 55px 55px;
 }
-footer a{
-  color:#a9bad4;text-decoration:none;margin-left:13px;
-}
-footer a:hover{color:var(--cyan)}
 
-.reveal{
-  opacity:0;transform:translateY(25px);
-  transition:opacity .8s ease,transform .8s ease;
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 19px 7%;
+  background: rgba(4,10,22,.82);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid #ffffff12;
 }
-.reveal.show{opacity:1;transform:translateY(0)}
 
-@media(max-width:850px){
-  .nav-links{
-    display:none;position:absolute;
-    top:66px;left:0;right:0;
-    background:#081326;padding:25px;
-    flex-direction:column;
-    border-bottom:1px solid var(--border);
+.brand {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: white;
+}
+
+.brand span { color: var(--cyan); }
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: #a9bad0;
+  text-decoration: none;
+  font-size: 12px;
+  transition: .3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active { color: var(--cyan); }
+
+.hero {
+  min-height: 55vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 90px 20px 65px;
+}
+
+.eyebrow {
+  color: var(--cyan);
+  font-size: 11px;
+  letter-spacing: 5px;
+  font-weight: 800;
+  margin-bottom: 25px;
+}
+
+h1 {
+  font-size: clamp(45px, 8vw, 82px);
+  font-weight: 900;
+  letter-spacing: -4px;
+  line-height: 1.08;
+}
+
+.gradient {
+  background: linear-gradient(90deg, #fff, #55cfff, #1687ff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 590px;
+  margin-top: 25px;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.team {
+  max-width: 1000px;
+  margin: auto;
+  padding: 35px 25px 100px;
+}
+
+.team-heading {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.team-heading h2 { font-size: 31px; }
+
+.team-heading p {
+  color: var(--muted);
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.member {
+  position: relative;
+  padding: 40px 30px;
+  border-radius: 24px;
+  text-align: center;
+  background: rgba(255,255,255,.045);
+  border: 1px solid #ffffff18;
+  backdrop-filter: blur(15px);
+  overflow: hidden;
+  transition: .4s;
+}
+
+.member::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #087fff55;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.member:hover {
+  transform: translateY(-8px);
+  border-color: #00d9ff88;
+  box-shadow: 0 20px 50px #008cff20;
+}
+
+.avatar {
+  width: 105px;
+  height: 105px;
+  margin: 0 auto 25px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 40px;
+  font-weight: 900;
+  color: white;
+  background: linear-gradient(135deg, #126bff, #00cfff);
+  border: 4px solid #ffffff20;
+  box-shadow: 0 0 35px #00bfff55;
+  position: relative;
+}
+
+.member h3 {
+  font-size: 25px;
+  margin-bottom: 9px;
+}
+
+.role {
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.member p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.label {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 9px 15px;
+  border-radius: 30px;
+  border: 1px solid #00d9ff55;
+  color: #9eeeff;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.mission {
+  max-width: 900px;
+  margin: 0 auto 100px;
+  padding: 55px 30px;
+  border-radius: 25px;
+  text-align: center;
+  background: linear-gradient(120deg, #0b2a50aa, #07182caa);
+  border: 1px solid #ffffff17;
+}
+
+.mission h2 {
+  font-size: clamp(26px, 5vw, 40px);
+  margin-bottom: 20px;
+}
+
+.mission h2 span { color: var(--cyan); }
+
+.mission p {
+  max-width: 650px;
+  margin: auto;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.tagline {
+  text-align: center;
+  padding: 0 20px 100px;
+}
+
+.tagline h2 {
+  font-size: clamp(28px, 6vw, 53px);
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.tagline span { color: var(--cyan); }
+
+.tagline p {
+  margin-top: 17px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 4px;
+}
+
+footer {
+  text-align: center;
+  padding: 35px 20px;
+  color: #71849d;
+  border-top: 1px solid #ffffff12;
+  font-size: 12px;
+}
+
+footer strong { color: var(--cyan); }
+
+@media(max-width: 700px) {
+  nav {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
   }
-  .nav-links.open{display:flex}
-  .menu-btn{display:block}
+
+  .nav-links { gap: 13px; }
+
+  .team-grid { grid-template-columns: 1fr; }
+
+  h1 { letter-spacing: -2px; }
 }
-@media(max-width:650px){
-  .hero{padding-top:75px}
-  .creators{grid-template-columns:1fr}
-  .values{grid-template-columns:1fr}
-  .creator-card{padding:27px}
-  .vision{padding:28px}
-  footer{flex-direction:column}
-  footer a{margin:0 10px 0 0}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    animation-duration:.01ms!important;
-    transition-duration:.01ms!important;
-    scroll-behavior:auto!important;
+
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
   }
 }
 </style>
 </head>
+
 <body>
-<div class="orb one"></div>
-<div class="orb two"></div>
+<div class="grid-bg"></div>
 
 <nav>
-  <a class="logo" href="index.html">VOCU<span>LUS</span></a>
-  <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
-  <div class="nav-links" id="navLinks">
-    <a href="index.html">HOME</a>
-    <a href="how-it-works.html">HOW IT WORKS</a>
-    <a href="technology.html">TECHNOLOGY</a>
-    <a href="demonstration.html">DEMO</a>
-    <a href="our-journey.html">OUR JOURNEY</a>
-    <a href="gallery.html">GALLERY</a>
-    <a class="active" href="creators.html">CREATORS</a>
+  <div class="brand">VOCU<span>LUS</span></div>
+
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="technology.html">Technology</a>
+    <a href="demonstration.html">Demo</a>
+    <a href="our-journey.html">Our Journey</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="creators.html" class="active">Creators</a>
   </div>
 </nav>
 
 <header class="hero">
-  <div class="eyebrow">THE MINDS BEHIND VOCULUS</div>
-  <h1>Meet the<br><span class="gradient">Creators.</span></h1>
+  <div class="eyebrow">THE MINDS BEHIND THE MACHINE</div>
+
+  <h1>Two creators.<br><span class="gradient">One innovation.</span></h1>
+
   <p>
-    Every innovation begins with people willing to imagine,
-    experiment and build. Meet the two students behind VOCULUS.
+    Behind every project are people who imagine, experiment,
+    solve problems and keep building. Meet the team behind VOCULUS.
   </p>
 </header>
 
-<section class="section">
-  <div class="section-heading reveal">
-    <h2>Two Creators. <span class="gradient">One Vision.</span></h2>
-    <p>A collaboration built on curiosity, creativity and teamwork.</p>
+<section class="team">
+  <div class="team-heading">
+    <h2>Meet the Team</h2>
+    <p>The students behind the voice-powered calculator.</p>
   </div>
 
-  <div class="creators">
-    <article class="creator-card reveal">
+  <div class="team-grid">
+
+    <div class="member">
       <div class="avatar">A</div>
-      <div class="creator-number">CREATOR 01</div>
       <h3>Anay</h3>
-      <div class="creator-role">CO-CREATOR · VOCULUS</div>
+      <div class="role">CO-CREATOR</div>
       <p>
-        Anay is one of the creators of VOCULUS, contributing to
-        the development of the idea, programming, project design
-        and the integration of its different components.
-        The project reflects an interest in technology and
-        practical innovation.
+        Interested in technology, programming and innovation.
+        Contributing to the planning, software development
+        and integration of the VOCULUS prototype.
       </p>
-      <div class="creator-tags">
-        <span>PROGRAMMING</span>
-        <span>DESIGN</span>
-        <span>PROBLEM-SOLVING</span>
-      </div>
-    </article>
+      <div class="label">IDEAS • SOFTWARE • DEVELOPMENT</div>
+    </div>
 
-    <article class="creator-card reveal">
+    <div class="member">
       <div class="avatar">S</div>
-      <div class="creator-number">CREATOR 02</div>
       <h3>Sankalp</h3>
-      <div class="creator-role">CO-CREATOR · VOCULUS</div>
+      <div class="role">CO-CREATOR</div>
       <p>
-        Sankalp is the second creator of VOCULUS, working
-        collaboratively on the project's development,
-        construction and experimentation. His contribution
-        helps bring the team's shared idea closer to reality.
+        Working alongside the team to develop the physical
+        prototype, explore the electronics and bring
+        the project design to life.
       </p>
-      <div class="creator-tags">
-        <span>COLLABORATION</span>
-        <span>BUILDING</span>
-        <span>EXPERIMENTATION</span>
-      </div>
-    </article>
+      <div class="label">TEAMWORK • HARDWARE • BUILD</div>
+    </div>
+
   </div>
 </section>
 
-<section class="section">
-  <div class="vision reveal">
-    <h2>Our <span class="gradient">Shared Vision</span></h2>
-    <p>
-      We wanted to create something that combines voice recognition,
-      mathematics, programming and physical movement.
-      VOCULUS is our attempt to make technology more interactive
-      and demonstrate how different fields can work together
-      to solve a problem.
-    </p>
-  </div>
+<section class="mission">
+  <h2>Our <span>Vision</span></h2>
+  <p>
+    We believe technology should make everyday tasks simpler
+    and more accessible. Through VOCULUS, we explore how
+    speech recognition, programming and mechanical movement
+    can work together to create a different kind of calculator.
+  </p>
 </section>
 
-<section class="section">
-  <div class="section-heading reveal">
-    <h2>What Drives <span class="gradient">Us?</span></h2>
-    <p>The principles behind our approach to building VOCULUS.</p>
-  </div>
-
-  <div class="values">
-    <div class="value-card reveal">
-      <div class="value-icon">💡</div>
-      <h3>Curiosity</h3>
-      <p>Asking questions, exploring possibilities and thinking beyond conventional solutions.</p>
-    </div>
-    <div class="value-card reveal">
-      <div class="value-icon">🤝</div>
-      <h3>Teamwork</h3>
-      <p>Sharing ideas, learning from each other and working towards one common goal.</p>
-    </div>
-    <div class="value-card reveal">
-      <div class="value-icon">🚀</div>
-      <h3>Innovation</h3>
-      <p>Turning concepts into practical experiments and improving them along the way.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="final reveal">
-    <h2>We Didn't Just Imagine It.<br><span class="gradient">We Built It.</span></h2>
-    <p>
-      VOCULUS represents what can happen when curiosity meets
-      creativity and determination. This is one project,
-      but the learning behind it goes much further.
-    </p>
-    <div class="tagline">SPEAK. CALCULATE. SIMPLIFY.</div>
-  </div>
+<section class="tagline">
+  <h2>SPEAK. <span>CALCULATE.</span><br>SIMPLIFY.</h2>
+  <p>THE VOCULUS PROJECT — 2026</p>
 </section>
 
 <footer>
-  <div>© 2026 VOCULUS · SPEAK. CALCULATE. SIMPLIFY.</div>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="how-it-works.html">How It Works</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="demonstration.html">Demo</a>
-  </div>
+  <strong>VOCULUS</strong> — THE VOICE-POWERED CALCULATOR<br><br>
+  Presented by Anay & Sankalp<br>
+  Tejas International School | Class VII<br><br>
+  © 2026 VOCULUS Project
 </footer>
 
-<script>
-document.getElementById('menuBtn').addEventListener('click',()=>{
-  document.getElementById('navLinks').classList.toggle('open');
-});
-
-document.querySelectorAll('.nav-links a').forEach(link=>{
-  link.addEventListener('click',()=>{
-    document.getElementById('navLinks').classList.remove('open');
-  });
-});
-
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('show');
-      observer.unobserve(entry.target);
-    }
-  });
-},{threshold:.12});
-
-document.querySelectorAll('.reveal').forEach(element=>{
-  observer.observe(element);
-});
-</script>
 </body>
 </html>
